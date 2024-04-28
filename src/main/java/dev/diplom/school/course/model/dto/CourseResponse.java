@@ -1,4 +1,8 @@
 package dev.diplom.school.course.model.dto;
 
-public class CourseResponse {
+public record CourseResponse(
+        Long id,
+        String name,
+        String description
+) {
 }
