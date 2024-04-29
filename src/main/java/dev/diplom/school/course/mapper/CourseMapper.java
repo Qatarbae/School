@@ -4,32 +4,22 @@ package dev.diplom.school.course.mapper;
 import dev.diplom.school.course.model.Course;
 import dev.diplom.school.course.model.dto.CourseRequest;
 import dev.diplom.school.course.model.dto.CourseResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class CourseMapper {
+@Mapper(componentModel = "spring")
+public interface CourseMapper {
+    CourseMapper INSTANCE = Mappers.getMapper(CourseMapper.class);
 
-    public static CourseResponse mapToCourseResponse(Course course) {
-        return new CourseResponse(course.getId(), course.getName(), course.getDescription());
-    }
+    CourseResponse mapToCourseResponse(Course course);
 
-    public static List<CourseResponse> mapToCourseResponseList(List<Course> courses) {
-        return courses.stream()
-                .map(CourseMapper::mapToCourseResponse)
-                .collect(Collectors.toList());
-    }
+    List<CourseResponse> mapToCourseResponseList(List<Course> courses);
 
-    public static Course mapToCourse(CourseRequest courseRequest) {
-        Course course = new Course();
-        course.setName(courseRequest.name());
-        course.setDescription(courseRequest.description());
-        return course;
-    }
+    @Mapping(target = "id", ignore = true)
+    Course mapToCourse(CourseRequest courseRequest);
 
-    public static List<Course> mapToCourseList(List<CourseRequest> courseRequests) {
-        return courseRequests.stream()
-                .map(CourseMapper::mapToCourse)
-                .collect(Collectors.toList());
-    }
+    List<Course> mapToCourseList(List<CourseRequest> courseRequests);
 }

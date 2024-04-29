@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +69,7 @@ public class AdminCourseController {
         CourseResponse courseResponse = adminCourseService.createCourse(courseRequest);
         return ResponseEntity
                 .created(uriComponentsBuilder
-                        .replacePath("/catalogue-api/products/{productId}")
+                        .replacePath("/api/v1/admin/course/{productId}")
                         .build(Map.of("productId", courseResponse.id())))
                 .body(courseResponse);
     }
@@ -77,7 +77,7 @@ public class AdminCourseController {
     @DeleteMapping("/")
     public ResponseEntity<?> deleteCourseById(@RequestParam Long courseId) {
         adminCourseService.deleteCourse(courseId);
-        return ResponseEntity.ok(HttpEntity.EMPTY);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @ExceptionHandler({CourseExeption.class})

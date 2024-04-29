@@ -22,24 +22,24 @@ public class CourseService {
     @Transactional
     public List<CourseResponse> findAllCourses() {
         List<Course> courses = (List<Course>) courseRepository.findAll();
-        return CourseMapper.mapToCourseResponseList(courses);
+        return CourseMapper.INSTANCE.mapToCourseResponseList(courses);
     }
 
     @Transactional
     public CourseResponse findByName(String name) {
         Course course = courseRepository.findByName(name).orElseThrow();
-        return CourseMapper.mapToCourseResponse(course);
+        return CourseMapper.INSTANCE.mapToCourseResponse(course);
     }
 
     @Transactional
     public CourseResponse findById(Long courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow();
-        return CourseMapper.mapToCourseResponse(course);
+        return CourseMapper.INSTANCE.mapToCourseResponse(course);
     }
 
     @Transactional
     public List<CourseResponse> findAllByName(String name) {
         List<Course> courses = courseRepository.findAllByName(name);
-        return CourseMapper.mapToCourseResponseList(courses);
+        return CourseMapper.INSTANCE.mapToCourseResponseList(courses);
     }
 }

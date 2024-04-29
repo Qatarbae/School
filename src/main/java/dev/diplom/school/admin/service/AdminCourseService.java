@@ -6,6 +6,7 @@ import dev.diplom.school.course.model.dto.CourseRequest;
 import dev.diplom.school.course.model.dto.CourseResponse;
 import dev.diplom.school.course.repository.CourseRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdminCourseService {
@@ -16,11 +17,13 @@ public class AdminCourseService {
         this.courseRepository = courseRepository;
     }
 
+    @Transactional
     public CourseResponse createCourse(CourseRequest courseRequest) {
-        Course course = courseRepository.save(CourseMapper.mapToCourse(courseRequest));
-        return CourseMapper.mapToCourseResponse(course);
+        Course course = courseRepository.save(CourseMapper.INSTANCE.mapToCourse(courseRequest));
+        return CourseMapper.INSTANCE.mapToCourseResponse(course);
     }
 
+    @Transactional
     public void deleteCourse(Long courseId) {
         courseRepository.deleteById(courseId);
     }

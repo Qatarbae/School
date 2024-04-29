@@ -1,10 +1,14 @@
 package dev.diplom.school.course.model;
 
+import dev.diplom.school.module.model.Modules;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -25,4 +29,7 @@ public class Course {
     @Column(name = "description")
     private String description;
 
+    @OneToMany
+    @JoinColumn(name = "course_id")
+    private List<Modules> modules = new ArrayList<>();
 }

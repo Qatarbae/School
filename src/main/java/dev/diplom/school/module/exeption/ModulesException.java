@@ -1,4 +1,4 @@
 package dev.diplom.school.module.exeption;
 
-public class ModulesException {
+public class ModulesException extends Throwable {
 }
