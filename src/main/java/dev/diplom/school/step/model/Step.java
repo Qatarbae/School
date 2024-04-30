@@ -1,23 +1,20 @@
-package dev.diplom.school.lesson.model;
+package dev.diplom.school.step.model;
 
-import dev.diplom.school.module.model.Modules;
-import dev.diplom.school.step.model.Step;
+
+import dev.diplom.school.lesson.model.Lesson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "lesson")
-public class Lesson {
+@Table(name = "step")
+public class Step {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,19 +22,12 @@ public class Lesson {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "modules_id")
-    private Modules modules;
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "is_exam")
-    private boolean isExam;
-
-    @OneToMany
-    @JoinColumn(name = "lesson_id")
-    private List<Step> steps = new ArrayList<>();
 }

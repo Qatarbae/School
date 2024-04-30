@@ -41,13 +41,13 @@ public class AdminLessonService {
     @Transactional
     public List<LessonResponse> saveAllLesson(List<LessonRequest> lessonRequestList) {
         List<Lesson> savedLesson = lessonRequestList.stream()
-                .map(modulesRequest -> {
+                .map(lessonRequest -> {
                     // Получаем объект Modules
-                    Modules modules = modulesRepository.findById(modulesRequest.modulesId())
+                    Modules modules = modulesRepository.findById(lessonRequest.modulesId())
                             .orElseThrow(() -> new RuntimeException("Modules not found"));
 
                     // Создаем объект Lesson
-                    Lesson lesson = LessonMapper.INSTANCE.mapToLesson(modulesRequest);
+                    Lesson lesson = LessonMapper.INSTANCE.mapToLesson(lessonRequest);
                     lesson.setModules(modules);
 
                     return lesson;
