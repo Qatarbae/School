@@ -1,18 +1,18 @@
-package dev.diplom.school.module.model.dto;
+package dev.diplom.school.lesson.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record ModulesRequest(
+public record LessonRequest(
         @NotBlank
-        Long courseId,
+        Long modulesId,
         @NotBlank
         String name,
         @NotBlank
         String description
 ) {
     @Override
-    public Long courseId() {
-        return courseId;
+    public Long modulesId() {
+        return modulesId;
     }
 
     @Override

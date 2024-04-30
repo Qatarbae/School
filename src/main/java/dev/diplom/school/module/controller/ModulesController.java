@@ -1,5 +1,6 @@
 package dev.diplom.school.module.controller;
 
+import dev.diplom.school.module.exeption.ModulesException;
 import dev.diplom.school.module.service.ModulesService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -28,9 +29,14 @@ public class ModulesController {
         return ResponseEntity.ok().body(modulesService.findByName(name));
     }
 
-    @GetMapping("/")
+    @GetMapping("/find-all-modules")
     public ResponseEntity<?> getAllModules(@Valid @NotBlank @RequestParam Long courseId) {
 
         return ResponseEntity.ok().body(modulesService.findAllModulesByCourseId(courseId));
+    }
+
+    @ExceptionHandler({ModulesException.class})
+    public void handleException() {
+
     }
 }
