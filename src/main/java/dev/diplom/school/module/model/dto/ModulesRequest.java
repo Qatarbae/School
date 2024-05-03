@@ -4,17 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ModulesRequest(
         @NotBlank
-        Long courseId,
-        @NotBlank
         String name,
         @NotBlank
         String description
 ) {
-    @Override
-    public Long courseId() {
-        return courseId;
-    }
-
     @Override
     public String name() {
         return name;

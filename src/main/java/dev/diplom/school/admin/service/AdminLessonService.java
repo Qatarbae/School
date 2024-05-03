@@ -31,19 +31,19 @@ public class AdminLessonService {
     }
 
     @Transactional
-    public LessonResponse saveLesson(LessonRequest lessonRequest) {
-        Modules modules = modulesRepository.findById(lessonRequest.modulesId()).orElseThrow();
+    public LessonResponse saveLesson(LessonRequest lessonRequest, Long modulesId) {
+        Modules modules = modulesRepository.findById(modulesId).orElseThrow();
         Lesson lesson = lessonRepository.save(LessonMapper.INSTANCE.mapToLesson(lessonRequest));
         lesson.setModules(modules);
         return LessonMapper.INSTANCE.mapToLessonResponse(lesson);
     }
 
     @Transactional
-    public List<LessonResponse> saveAllLesson(List<LessonRequest> lessonRequestList) {
+    public List<LessonResponse> saveAllLesson(List<LessonRequest> lessonRequestList, Long modulesId) {
         List<Lesson> savedLesson = lessonRequestList.stream()
                 .map(lessonRequest -> {
                     // Получаем объект Modules
-                    Modules modules = modulesRepository.findById(lessonRequest.modulesId())
+                    Modules modules = modulesRepository.findById(modulesId)
                             .orElseThrow(() -> new RuntimeException("Modules not found"));
 
                     // Создаем объект Lesson

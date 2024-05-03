@@ -3,7 +3,6 @@ package dev.diplom.school.admin.controller;
 import dev.diplom.school.admin.service.AdminLessonService;
 import dev.diplom.school.lesson.model.dto.LessonRequest;
 import dev.diplom.school.lesson.model.dto.LessonResponse;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +22,10 @@ public class AdminLessonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> saveLesson(@Valid @RequestBody LessonRequest lessonRequest,
+    public ResponseEntity<?> saveLesson(@RequestBody LessonRequest lessonRequest,
+                                        @RequestParam Long modulesId,
                                         UriComponentsBuilder uriComponentsBuilder) {
-        LessonResponse lessonResponse = adminLessonService.saveLesson(lessonRequest);
+        LessonResponse lessonResponse = adminLessonService.saveLesson(lessonRequest, modulesId);
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/lesson/{lessonId}")
@@ -34,8 +34,9 @@ public class AdminLessonController {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllLesson(@Valid @RequestBody List<LessonRequest> lessonRequestList) {
-        List<LessonResponse> lessonResponses = adminLessonService.saveAllLesson(lessonRequestList);
+    public ResponseEntity<?> saveAllLesson(@RequestBody List<LessonRequest> lessonRequestList,
+                                           @RequestParam Long modulesId) {
+        List<LessonResponse> lessonResponses = adminLessonService.saveAllLesson(lessonRequestList, modulesId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(lessonResponses);

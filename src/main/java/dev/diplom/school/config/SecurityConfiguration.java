@@ -39,7 +39,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         // Можно указать конкретный путь, * - 1 уровень вложенности, ** - любое количество уровней вложенности
                         .requestMatchers("api/v1/auth/authenticate").permitAll()
-                        .requestMatchers("api/v1/course/**").permitAll()
+
+                        .requestMatchers("api/v1/course/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/modules/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/lesson/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/step/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
                         .requestMatchers("api/v1/admin/**").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated())

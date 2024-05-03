@@ -3,7 +3,6 @@ package dev.diplom.school.admin.controller;
 import dev.diplom.school.admin.service.AdminStepService;
 import dev.diplom.school.step.model.dto.StepRequest;
 import dev.diplom.school.step.model.dto.StepResponse;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +22,10 @@ public class AdminStepController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> saveStep(@Valid @RequestBody StepRequest stepRequest,
+    public ResponseEntity<?> saveStep(@RequestBody StepRequest stepRequest,
+                                      @RequestParam Long lessonId,
                                       UriComponentsBuilder uriComponentsBuilder) {
-        StepResponse stepResponse = adminStepService.saveStep(stepRequest);
+        StepResponse stepResponse = adminStepService.saveStep(stepRequest, lessonId);
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/step/{stepId}")
@@ -34,8 +34,9 @@ public class AdminStepController {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllStep(@Valid @RequestBody List<StepRequest> stepRequestList) {
-        List<StepResponse> stepResponses = adminStepService.saveAllStep(stepRequestList);
+    public ResponseEntity<?> saveAllStep(@RequestBody List<StepRequest> stepRequestList,
+                                         @RequestParam Long lessonId) {
+        List<StepResponse> stepResponses = adminStepService.saveAllStep(stepRequestList, lessonId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(stepResponses);

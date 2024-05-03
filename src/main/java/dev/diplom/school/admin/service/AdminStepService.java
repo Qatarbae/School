@@ -31,19 +31,19 @@ public class AdminStepService {
     }
 
     @Transactional
-    public StepResponse saveStep(StepRequest stepRequest) {
-        Lesson lesson = lessonRepository.findById(stepRequest.lessonId()).orElseThrow();
+    public StepResponse saveStep(StepRequest stepRequest, Long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
         Step step = stepRepository.save(StepMapper.INSTANCE.mapToStep(stepRequest));
         step.setLesson(lesson);
         return StepMapper.INSTANCE.mapToStepResponse(step);
     }
 
     @Transactional
-    public List<StepResponse> saveAllStep(List<StepRequest> stepRequestList) {
+    public List<StepResponse> saveAllStep(List<StepRequest> stepRequestList, Long lessonId) {
         List<Step> savedStep = stepRequestList.stream()
                 .map(stepRequest -> {
                     // Получаем объект Lesson
-                    Lesson lesson = lessonRepository.findById(stepRequest.lessonId())
+                    Lesson lesson = lessonRepository.findById(lessonId)
                             .orElseThrow(() -> new RuntimeException("Modules not found"));
 
                     // Создаем объект Step

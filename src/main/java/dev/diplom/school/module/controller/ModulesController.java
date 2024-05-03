@@ -2,8 +2,6 @@ package dev.diplom.school.module.controller;
 
 import dev.diplom.school.module.exeption.ModulesException;
 import dev.diplom.school.module.service.ModulesService;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +16,19 @@ public class ModulesController {
     }
 
     @PostMapping("/find-by-id")
-    public ResponseEntity<?> getModules(@Valid @NotBlank Long modulesId) {
+    public ResponseEntity<?> getModules(Long modulesId) {
 
         return ResponseEntity.ok().body(modulesService.findById(modulesId));
     }
 
     @PostMapping("/find-by-name")
-    public ResponseEntity<?> getModules(@Valid @NotBlank @RequestParam String name) {
+    public ResponseEntity<?> getModules(@RequestParam String name) {
 
         return ResponseEntity.ok().body(modulesService.findByName(name));
     }
 
     @GetMapping("/find-all-modules")
-    public ResponseEntity<?> getAllModules(@Valid @NotBlank @RequestParam Long courseId) {
+    public ResponseEntity<?> getAllModules(@RequestParam Long courseId) {
 
         return ResponseEntity.ok().body(modulesService.findAllModulesByCourseId(courseId));
     }

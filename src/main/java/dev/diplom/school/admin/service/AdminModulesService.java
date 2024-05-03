@@ -29,19 +29,19 @@ public class AdminModulesService {
     }
 
     @Transactional
-    public ModulesResponse saveModules(ModulesRequest modulesRequest) {
-        Course course = courseRepository.findById(modulesRequest.courseId()).orElseThrow();
+    public ModulesResponse saveModules(ModulesRequest modulesRequest, Long courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow();
         Modules modules = modulesRepository.save(ModulesMapper.INSTANCE.mapToModules(modulesRequest));
         modules.setCourse(course);
         return ModulesMapper.INSTANCE.mapToModulesResponse(modules);
     }
 
     @Transactional
-    public List<ModulesResponse> saveAllModules(List<ModulesRequest> modulesRequestList) {
+    public List<ModulesResponse> saveAllModules(List<ModulesRequest> modulesRequestList, Long courseId) {
         List<Modules> savedModules = modulesRequestList.stream()
                 .map(modulesRequest -> {
                     // Получаем объект Course
-                    Course course = courseRepository.findById(modulesRequest.courseId())
+                    Course course = courseRepository.findById(courseId)
                             .orElseThrow(() -> new RuntimeException("Course not found"));
 
                     // Создаем объект Modules

@@ -1,6 +1,7 @@
 package dev.diplom.school.module.model;
 
 import dev.diplom.school.course.model.Course;
+import dev.diplom.school.lesson.model.Lesson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +35,6 @@ public class Modules {
     private String description;
 
     @OneToMany
-    @JoinColumn(name = "modules_id")
-    private List<Modules> modules = new ArrayList<>();
+    @JoinColumn(name = "lesson_id")
+    private List<Lesson> lessons = new ArrayList<>();
 }

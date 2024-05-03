@@ -8,7 +8,9 @@ public record LessonRequest(
         @NotBlank
         String name,
         @NotBlank
-        String description
+        String description,
+        @NotBlank
+        boolean isExam
 ) {
     @Override
     public Long modulesId() {
@@ -23,5 +25,10 @@ public record LessonRequest(
     @Override
     public String description() {
         return description;
+    }
+
+    @Override
+    public boolean isExam() {
+        return isExam;
     }
 }

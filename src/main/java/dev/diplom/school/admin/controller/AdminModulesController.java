@@ -3,7 +3,6 @@ package dev.diplom.school.admin.controller;
 import dev.diplom.school.admin.service.AdminModulesService;
 import dev.diplom.school.module.model.dto.ModulesRequest;
 import dev.diplom.school.module.model.dto.ModulesResponse;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +22,10 @@ public class AdminModulesController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> saveModules(@Valid @RequestBody ModulesRequest modulesRequest,
+    public ResponseEntity<?> saveModules(@RequestBody ModulesRequest modulesRequest,
+                                         @RequestParam Long courseId,
                                          UriComponentsBuilder uriComponentsBuilder) {
-        ModulesResponse modulesResponse = adminModulesService.saveModules(modulesRequest);
+        ModulesResponse modulesResponse = adminModulesService.saveModules(modulesRequest, courseId);
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/modules/{modulesId}")
@@ -34,8 +34,9 @@ public class AdminModulesController {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllModules(@Valid @RequestBody List<ModulesRequest> modulesRequestList) {
-        List<ModulesResponse> modulesResponses = adminModulesService.saveAllModules(modulesRequestList);
+    public ResponseEntity<?> saveAllModules(@RequestBody List<ModulesRequest> modulesRequestList,
+                                            @RequestParam Long courseId) {
+        List<ModulesResponse> modulesResponses = adminModulesService.saveAllModules(modulesRequestList, courseId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(modulesResponses);
