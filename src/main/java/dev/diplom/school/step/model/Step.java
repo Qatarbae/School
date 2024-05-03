@@ -2,11 +2,16 @@ package dev.diplom.school.step.model;
 
 
 import dev.diplom.school.lesson.model.Lesson;
+import dev.diplom.school.step_text.model.StepText;
+import dev.diplom.school.step_video.model.StepVideo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -30,4 +35,12 @@ public class Step {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany
+    @JoinColumn(name = "step_id")
+    private List<StepText> stepTexts = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "step_id")
+    private List<StepVideo> stepVideos = new ArrayList<>();
 }

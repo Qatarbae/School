@@ -10,8 +10,8 @@ import io.swagger.v3.oas.annotations.info.Info;
                 title = "SHEPELEVA SCHOOL API",
                 description = "API для школы", version = "1.0.0",
                 contact = @Contact(
-                        name = "Vadim Smolyaninov",
-                        email = "vd.smol@yandex.ru"
+                        name = "Kristina Chemodanova",
+                        email = "kris@yandex.ru"
                 )
         )
 )

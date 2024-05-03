@@ -8,7 +8,6 @@ import dev.diplom.school.user.model.entity.User;
 import dev.diplom.school.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,12 +17,10 @@ public class UserInitializer {
 
     private final AuthenticationService authenticationService;
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserInitializer(UserService userService,AuthenticationService authenticationService, PasswordEncoder passwordEncoder) {
+    public UserInitializer(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
     }
 
