@@ -39,7 +39,7 @@ public class CourseService {
 
     @Transactional
     public List<CourseResponse> findAllByName(String name) {
-        List<Course> courses = courseRepository.findAllByName(name);
+        List<Course> courses = courseRepository.findAll();
         return CourseMapper.INSTANCE.mapToCourseResponseList(courses);
     }
 }

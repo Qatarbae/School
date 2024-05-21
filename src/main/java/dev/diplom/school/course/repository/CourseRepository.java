@@ -12,7 +12,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 
     Optional<Course> findByName(String name);
 
-    List<Course> findAllByName(String name);
+    List<Course> findAll();
 
     void deleteById(Long id);
 }
