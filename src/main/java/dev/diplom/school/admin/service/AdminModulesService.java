@@ -29,8 +29,8 @@ public class AdminModulesService {
     }
 
     @Transactional
-    public ModulesResponse saveModules(ModulesRequest modulesRequest, Long courseId) {
-        Course course = courseRepository.findById(courseId).orElseThrow();
+    public ModulesResponse saveModules(ModulesRequest modulesRequest) {
+        Course course = courseRepository.findById(modulesRequest.courseId()).orElseThrow();
         Modules modules = modulesRepository.save(ModulesMapper.INSTANCE.mapToModules(modulesRequest));
         modules.setCourse(course);
         return ModulesMapper.INSTANCE.mapToModulesResponse(modules);

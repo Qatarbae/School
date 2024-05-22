@@ -23,9 +23,8 @@ public class AdminModulesController {
 
     @PostMapping("/")
     public ResponseEntity<?> saveModules(@RequestBody ModulesRequest modulesRequest,
-                                         @RequestParam Long courseId,
                                          UriComponentsBuilder uriComponentsBuilder) {
-        ModulesResponse modulesResponse = adminModulesService.saveModules(modulesRequest, courseId);
+        ModulesResponse modulesResponse = adminModulesService.saveModules(modulesRequest);
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/modules/{modulesId}")
