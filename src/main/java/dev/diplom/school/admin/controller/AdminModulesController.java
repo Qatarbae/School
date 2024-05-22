@@ -1,7 +1,9 @@
 package dev.diplom.school.admin.controller;
 
 import dev.diplom.school.admin.service.AdminModulesService;
+import dev.diplom.school.module.model.dto.ModulesDeleteListDto;
 import dev.diplom.school.module.model.dto.ModulesRequest;
+import dev.diplom.school.module.model.dto.ModulesRequestList;
 import dev.diplom.school.module.model.dto.ModulesResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +35,8 @@ public class AdminModulesController {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllModules(@RequestBody List<ModulesRequest> modulesRequestList,
-                                            @RequestParam Long courseId) {
-        List<ModulesResponse> modulesResponses = adminModulesService.saveAllModules(modulesRequestList, courseId);
+    public ResponseEntity<?> saveAllModules(@RequestBody ModulesRequestList modulesRequestList) {
+        List<ModulesResponse> modulesResponses = adminModulesService.saveAllModules(modulesRequestList);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(modulesResponses);
@@ -48,8 +49,8 @@ public class AdminModulesController {
     }
 
     @DeleteMapping("/delete-all")
-    public ResponseEntity<?> deleteAllModules(@RequestBody List<Long> modulesIdList, @RequestParam Long courseId) {
-        adminModulesService.deleteAllModules(modulesIdList, courseId);
+    public ResponseEntity<?> deleteAllModules(@RequestBody ModulesDeleteListDto modulesDeleteListDto) {
+        adminModulesService.deleteAllModules(modulesDeleteListDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

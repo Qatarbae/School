@@ -4,8 +4,7 @@ import dev.diplom.school.course.model.Course;
 import dev.diplom.school.course.repository.CourseRepository;
 import dev.diplom.school.module.mapper.ModulesMapper;
 import dev.diplom.school.module.model.Modules;
-import dev.diplom.school.module.model.dto.ModulesRequest;
-import dev.diplom.school.module.model.dto.ModulesResponse;
+import dev.diplom.school.module.model.dto.*;
 import dev.diplom.school.module.repository.ModulesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +23,11 @@ public class AdminModulesService {
         this.courseRepository = courseRepository;
     }
     @Transactional
-    public void deleteAllModules(List<Long> modulesIdList, Long courseId) {
-        modulesRepository.deleteModulesByIdListAndCourseId(modulesIdList, courseId);
+    public void deleteAllModules(ModulesDeleteListDto modulesDeleteListDto) {
+        List<Long> idList = modulesDeleteListDto.modulesDeleteDtoList().stream()
+                .map(ModulesDeleteDto::id)
+                .collect(Collectors.toList());
+        modulesRepository.deleteModulesByIdListAndCourseId(idList, modulesDeleteListDto.courseId());
     }
 
     @Transactional
@@ -37,11 +39,11 @@ public class AdminModulesService {
     }
 
     @Transactional
-    public List<ModulesResponse> saveAllModules(List<ModulesRequest> modulesRequestList, Long courseId) {
-        List<Modules> savedModules = modulesRequestList.stream()
+    public List<ModulesResponse> saveAllModules(ModulesRequestList modulesRequestList) {
+        List<Modules> savedModules = modulesRequestList.modulesRequests().stream()
                 .map(modulesRequest -> {
                     // Получаем объект Course
-                    Course course = courseRepository.findById(courseId)
+                    Course course = courseRepository.findById(modulesRequestList.courseId())
                             .orElseThrow(() -> new RuntimeException("Course not found"));
 
                     // Создаем объект Modules
