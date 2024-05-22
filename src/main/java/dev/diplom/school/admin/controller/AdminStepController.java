@@ -1,8 +1,10 @@
 package dev.diplom.school.admin.controller;
 
 import dev.diplom.school.admin.service.AdminStepService;
+import dev.diplom.school.step.model.dto.StepDeleteListDto;
 import dev.diplom.school.step.model.dto.StepRequest;
 import dev.diplom.school.step.model.dto.StepResponse;
+import dev.diplom.school.step.model.dto.StepSaveListDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,8 @@ public class AdminStepController {
 
     @PostMapping("/")
     public ResponseEntity<?> saveStep(@RequestBody StepRequest stepRequest,
-                                      @RequestParam Long lessonId,
                                       UriComponentsBuilder uriComponentsBuilder) {
-        StepResponse stepResponse = adminStepService.saveStep(stepRequest, lessonId);
+        StepResponse stepResponse = adminStepService.saveStep(stepRequest);
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/step/{stepId}")
@@ -34,9 +35,8 @@ public class AdminStepController {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllStep(@RequestBody List<StepRequest> stepRequestList,
-                                         @RequestParam Long lessonId) {
-        List<StepResponse> stepResponses = adminStepService.saveAllStep(stepRequestList, lessonId);
+    public ResponseEntity<?> saveAllStep(@RequestBody StepSaveListDto stepRequestList) {
+        List<StepResponse> stepResponses = adminStepService.saveAllStep(stepRequestList);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(stepResponses);
@@ -49,8 +49,8 @@ public class AdminStepController {
     }
 
     @DeleteMapping("/delete-all")
-    public ResponseEntity<?> deleteAllStep(@RequestBody List<Long> stepIdList, @RequestParam Long lessonId) {
-        adminStepService.deleteAllStep(stepIdList, lessonId);
+    public ResponseEntity<?> deleteAllStep(@RequestBody StepDeleteListDto stepDeleteListDto) {
+        adminStepService.deleteAllStep(stepDeleteListDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

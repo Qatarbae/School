@@ -4,8 +4,7 @@ import dev.diplom.school.lesson.model.Lesson;
 import dev.diplom.school.lesson.repository.LessonRepository;
 import dev.diplom.school.step.mapper.StepMapper;
 import dev.diplom.school.step.model.Step;
-import dev.diplom.school.step.model.dto.StepRequest;
-import dev.diplom.school.step.model.dto.StepResponse;
+import dev.diplom.school.step.model.dto.*;
 import dev.diplom.school.step.repository.StepRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,24 +25,28 @@ public class AdminStepService {
     }
 
     @Transactional
-    public void deleteAllStep(List<Long> stepIdList, Long lessonId) {
-        stepRepository.deleteStepByIdListAndLessonId(stepIdList, lessonId);
+    public void deleteAllStep(StepDeleteListDto stepDeleteListDto) {
+        List<Long> idList = stepDeleteListDto.stepDeleteDtoList()
+                .stream()
+                .map(StepDeleteDto::id)
+                .toList();
+        stepRepository.deleteStepByIdListAndLessonId(idList, stepDeleteListDto.lessonId());
     }
 
     @Transactional
-    public StepResponse saveStep(StepRequest stepRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
+    public StepResponse saveStep(StepRequest stepRequest) {
+        Lesson lesson = lessonRepository.findById(stepRequest.lessonId()).orElseThrow();
         Step step = stepRepository.save(StepMapper.INSTANCE.mapToStep(stepRequest));
         step.setLesson(lesson);
         return StepMapper.INSTANCE.mapToStepResponse(step);
     }
 
     @Transactional
-    public List<StepResponse> saveAllStep(List<StepRequest> stepRequestList, Long lessonId) {
-        List<Step> savedStep = stepRequestList.stream()
+    public List<StepResponse> saveAllStep(StepSaveListDto stepSaveListDto) {
+        List<Step> savedStep = stepSaveListDto.stepRequestList().stream()
                 .map(stepRequest -> {
                     // Получаем объект Lesson
-                    Lesson lesson = lessonRepository.findById(lessonId)
+                    Lesson lesson = lessonRepository.findById(stepSaveListDto.lessonId())
                             .orElseThrow(() -> new RuntimeException("Modules not found"));
 
                     // Создаем объект Step
