@@ -1,8 +1,10 @@
 package dev.diplom.school.admin.controller;
 
 import dev.diplom.school.admin.service.AdminLessonService;
+import dev.diplom.school.lesson.model.dto.LessonDeleteListDto;
 import dev.diplom.school.lesson.model.dto.LessonRequest;
 import dev.diplom.school.lesson.model.dto.LessonResponse;
+import dev.diplom.school.lesson.model.dto.LessonSaveListDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,8 @@ public class AdminLessonController {
 
     @PostMapping("/")
     public ResponseEntity<?> saveLesson(@RequestBody LessonRequest lessonRequest,
-                                        @RequestParam Long modulesId,
                                         UriComponentsBuilder uriComponentsBuilder) {
-        LessonResponse lessonResponse = adminLessonService.saveLesson(lessonRequest, modulesId);
+        LessonResponse lessonResponse = adminLessonService.saveLesson(lessonRequest);
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/lesson/{lessonId}")
@@ -34,9 +35,8 @@ public class AdminLessonController {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllLesson(@RequestBody List<LessonRequest> lessonRequestList,
-                                           @RequestParam Long modulesId) {
-        List<LessonResponse> lessonResponses = adminLessonService.saveAllLesson(lessonRequestList, modulesId);
+    public ResponseEntity<?> saveAllLesson(@RequestBody LessonSaveListDto lessonSaveListDto) {
+        List<LessonResponse> lessonResponses = adminLessonService.saveAllLesson(lessonSaveListDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(lessonResponses);
@@ -49,8 +49,8 @@ public class AdminLessonController {
     }
 
     @DeleteMapping("/delete-all")
-    public ResponseEntity<?> deleteAllLesson(@RequestBody List<Long> lessonIdList, @RequestParam Long modulesId) {
-        adminLessonService.deleteAllLesson(lessonIdList, modulesId);
+    public ResponseEntity<?> deleteAllLesson(@RequestBody LessonDeleteListDto lessonDeleteListDto) {
+        adminLessonService.deleteAllLesson(lessonDeleteListDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

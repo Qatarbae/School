@@ -2,8 +2,7 @@ package dev.diplom.school.admin.service;
 
 import dev.diplom.school.lesson.mapper.LessonMapper;
 import dev.diplom.school.lesson.model.Lesson;
-import dev.diplom.school.lesson.model.dto.LessonRequest;
-import dev.diplom.school.lesson.model.dto.LessonResponse;
+import dev.diplom.school.lesson.model.dto.*;
 import dev.diplom.school.lesson.repository.LessonRepository;
 import dev.diplom.school.module.model.Modules;
 import dev.diplom.school.module.repository.ModulesRepository;
@@ -26,24 +25,28 @@ public class AdminLessonService {
     }
 
     @Transactional
-    public void deleteAllLesson(List<Long> modulesIdList, Long modulesId) {
-        lessonRepository.deleteLessonByIdListAndModulesId(modulesIdList, modulesId);
+    public void deleteAllLesson(LessonDeleteListDto lessonDeleteListDto) {
+        List<Long> idList = lessonDeleteListDto.lessonDeleteDtoList()
+                .stream()
+                .map(LessonDeleteDto::id)
+                .toList();
+        lessonRepository.deleteLessonByIdListAndModulesId(idList, lessonDeleteListDto.modulesId());
     }
 
     @Transactional
-    public LessonResponse saveLesson(LessonRequest lessonRequest, Long modulesId) {
-        Modules modules = modulesRepository.findById(modulesId).orElseThrow();
+    public LessonResponse saveLesson(LessonRequest lessonRequest) {
+        Modules modules = modulesRepository.findById(lessonRequest.modulesId()).orElseThrow();
         Lesson lesson = lessonRepository.save(LessonMapper.INSTANCE.mapToLesson(lessonRequest));
         lesson.setModules(modules);
         return LessonMapper.INSTANCE.mapToLessonResponse(lesson);
     }
 
     @Transactional
-    public List<LessonResponse> saveAllLesson(List<LessonRequest> lessonRequestList, Long modulesId) {
-        List<Lesson> savedLesson = lessonRequestList.stream()
+    public List<LessonResponse> saveAllLesson(LessonSaveListDto lessonSaveListDto) {
+        List<Lesson> savedLesson = lessonSaveListDto.lessonRequestList().stream()
                 .map(lessonRequest -> {
                     // Получаем объект Modules
-                    Modules modules = modulesRepository.findById(modulesId)
+                    Modules modules = modulesRepository.findById(lessonSaveListDto.modulesId())
                             .orElseThrow(() -> new RuntimeException("Modules not found"));
 
                     // Создаем объект Lesson
