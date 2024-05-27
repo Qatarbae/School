@@ -2,6 +2,7 @@ package dev.diplom.school.step.model;
 
 
 import dev.diplom.school.lesson.model.Lesson;
+import dev.diplom.school.step_test.model.StepTest;
 import dev.diplom.school.step_text.model.StepText;
 import dev.diplom.school.step_video.model.StepVideo;
 import jakarta.persistence.*;
@@ -43,4 +44,8 @@ public class Step {
     @OneToMany
     @JoinColumn(name = "step_id")
     private List<StepVideo> stepVideos = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "step_id")
+    private List<StepTest> stepTest = new ArrayList<>();
 }
