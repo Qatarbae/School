@@ -44,6 +44,9 @@ public class SecurityConfiguration {
                         .requestMatchers("api/v1/modules/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers("api/v1/lesson/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers("api/v1/step/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/stepvideo/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/steptext/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/steptest/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
 
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
                         .requestMatchers("api/v1/admin/**").hasRole(Role.ADMIN.name())
