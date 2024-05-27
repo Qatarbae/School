@@ -1,6 +1,6 @@
 package dev.diplom.school.step_text.model.dto;
 
-public record StepTextResponse(
+public record StepTextDto(
         Long id,
         Long stepId,
         String name,

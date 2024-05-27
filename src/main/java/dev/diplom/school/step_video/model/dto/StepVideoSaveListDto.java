@@ -6,13 +6,13 @@ import java.util.List;
 
 public record StepVideoSaveListDto(
         @NotBlank
-        Long StepId,
+        Long stepId,
         @NotBlank
         List<StepVideoDto> stepVideoDtoList
 ) {
     @Override
-    public Long StepId() {
-        return StepId;
+    public Long stepId() {
+        return stepId;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class StepVideoController {
     }
 
     @GetMapping("/find-all-step")
-    public ResponseEntity<List<StepVideoDto>> getAllVideosByStepId(@RequestParam Long stepId) {
+    public ResponseEntity<List<StepVideoDto>> getAllVideoByStepId(@RequestParam Long stepId) {
         List<StepVideoDto> stepVideos = stepVideoService.findAllStepVideoByStepId(stepId);
         return ResponseEntity.ok(stepVideos);
     }

@@ -48,7 +48,7 @@ public class AdminStepVideoService {
     public List<StepVideoDto> saveAllStepVideos(StepVideoSaveListDto stepVideoSaveListDto) {
         List<StepVideo> stepVideos = stepVideoSaveListDto.stepVideoDtoList().stream()
                 .map(stepVideoRequest -> {
-                    Step step = stepRepository.findById(stepVideoSaveListDto.StepId())
+                    Step step = stepRepository.findById(stepVideoSaveListDto.stepId())
                             .orElseThrow(() -> new RuntimeException("Step not found"));
 
                     StepVideo stepVideo = StepVideoMapper.INSTANCE.toEntity(stepVideoRequest);
