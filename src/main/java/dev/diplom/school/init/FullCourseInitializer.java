@@ -4,6 +4,7 @@ import dev.diplom.school.admin.service.AdminCourseService;
 import dev.diplom.school.admin.service.AdminLessonService;
 import dev.diplom.school.admin.service.AdminModulesService;
 import dev.diplom.school.admin.service.AdminStepService;
+import dev.diplom.school.admin.service.step.AdminStepVideoService;
 import dev.diplom.school.course.model.dto.CourseRequest;
 import dev.diplom.school.lesson.model.dto.LessonRequest;
 import dev.diplom.school.lesson.model.dto.LessonSaveListDto;
@@ -11,6 +12,8 @@ import dev.diplom.school.module.model.dto.ModulesRequest;
 import dev.diplom.school.module.model.dto.ModulesRequestList;
 import dev.diplom.school.step.model.dto.StepRequest;
 import dev.diplom.school.step.model.dto.StepSaveListDto;
+import dev.diplom.school.step_video.model.dto.StepVideoDto;
+import dev.diplom.school.step_video.model.dto.StepVideoSaveListDto;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -28,15 +31,18 @@ public class FullCourseInitializer {
 
     private final AdminStepService stepService;
 
+    private final AdminStepVideoService stepVideoService;
+
     public FullCourseInitializer(AdminCourseService courseService,
                                  AdminModulesService modulesService,
                                  AdminLessonService lessonService,
-                                 AdminStepService stepService
-    ) {
+                                 AdminStepService stepService,
+                                 AdminStepVideoService stepVideoService) {
         this.courseService = courseService;
         this.modulesService = modulesService;
         this.lessonService = lessonService;
         this.stepService = stepService;
+        this.stepVideoService = stepVideoService;
     }
 
     @Bean
@@ -102,4 +108,20 @@ public class FullCourseInitializer {
             ));
         }
     }
+
+    @Bean
+    @DependsOn("initStep")
+    public void initStepVideo() {
+        for (Long i = 1L; i <= 5L; i++) {
+            Long stepId = i;
+            stepVideoService.saveAllStepVideos(new StepVideoSaveListDto(
+                    stepId,
+                    new ArrayList<>() {{
+                        add(new StepVideoDto(0L, stepId, "Video Name #" + 1, "https://www.youtube.com/watch?v=LXb3EKWsInQ&pp=ygULdGVzdCB2aWRlbyA%3D", 1));
+                        add(new StepVideoDto(0L, stepId, "Video Name #" + 2, "https://www.youtube.com/watch?v=LXb3EKWsInQ&pp=ygULdGVzdCB2aWRlbyA%3D", 2));
+                    }}
+            ));
+        }
+    }
+
 }

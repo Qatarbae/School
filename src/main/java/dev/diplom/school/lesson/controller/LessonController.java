@@ -29,6 +29,6 @@ public class LessonController {
     @GetMapping("/find-all-lesson")
     public ResponseEntity<?> getAllLesson(@RequestParam Long modulesId) {
 
-        return ResponseEntity.ok().body(lessonService.findAllModulesByCourseId(modulesId));
+        return ResponseEntity.ok().body(lessonService.findAllLessonByModulesId(modulesId));
     }
 }

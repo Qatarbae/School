@@ -27,7 +27,7 @@ public class LessonService {
         return LessonMapper.INSTANCE.mapToLessonResponse(lesson);
     }
 
-    public List<LessonResponse> findAllModulesByCourseId(Long modulesId) {
+    public List<LessonResponse> findAllLessonByModulesId(Long modulesId) {
         List<Lesson> lessonList = lessonRepository.findAllByModules_Id(modulesId);
         return LessonMapper.INSTANCE.mapToLessonResponseList(lessonList);
     }

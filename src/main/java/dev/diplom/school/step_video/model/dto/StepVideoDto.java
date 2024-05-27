@@ -1,6 +1,6 @@
 package dev.diplom.school.step_video.model.dto;
 
-public record StepVideoResponse(
+public record StepVideoDto(
         Long id,
         Long stepId,
 
