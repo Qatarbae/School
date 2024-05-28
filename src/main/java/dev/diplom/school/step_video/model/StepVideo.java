@@ -1,6 +1,7 @@
 package dev.diplom.school.step_video.model;
 
 import dev.diplom.school.step.model.Step;
+import dev.diplom.school.step.model.StepContentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,14 +14,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "step_video")
-public class StepVideo {
+public class StepVideo implements StepContentType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "step_id")
     private Step step;
 

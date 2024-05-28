@@ -19,7 +19,7 @@ public class StepTest {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "step_id")
     private Step step;
 

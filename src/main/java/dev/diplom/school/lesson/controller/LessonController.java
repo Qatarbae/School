@@ -2,7 +2,10 @@ package dev.diplom.school.lesson.controller;
 
 import dev.diplom.school.lesson.service.LessonService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/lesson")
@@ -14,13 +17,13 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @PostMapping("/find-by-id")
-    public ResponseEntity<?> getLesson(Long lessonId) {
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> getLesson(@RequestParam Long lessonId) {
 
         return ResponseEntity.ok().body(lessonService.findById(lessonId));
     }
 
-    @PostMapping("/find-by-name")
+    @GetMapping("/find-by-name")
     public ResponseEntity<?> getLesson(@RequestParam String name) {
 
         return ResponseEntity.ok().body(lessonService.findByName(name));

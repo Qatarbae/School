@@ -8,13 +8,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface StepTextRepository extends CrudRepository<StepText, Long> {
     List<StepText> findAllByStepId(Long stepId);
-
-    Optional<StepText> findByName(String name);
 
     @Modifying
     @Transactional

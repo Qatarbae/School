@@ -15,13 +15,13 @@ public class ModulesController {
         this.modulesService = modulesService;
     }
 
-    @PostMapping("/find-by-id")
-    public ResponseEntity<?> getModules(Long modulesId) {
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> getModules(@RequestParam Long modulesId) {
 
         return ResponseEntity.ok().body(modulesService.findById(modulesId));
     }
 
-    @PostMapping("/find-by-name")
+    @GetMapping("/find-by-name")
     public ResponseEntity<?> getModules(@RequestParam String name) {
 
         return ResponseEntity.ok().body(modulesService.findByName(name));

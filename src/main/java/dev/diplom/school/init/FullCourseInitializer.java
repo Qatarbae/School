@@ -10,10 +10,11 @@ import dev.diplom.school.lesson.model.dto.LessonRequest;
 import dev.diplom.school.lesson.model.dto.LessonSaveListDto;
 import dev.diplom.school.module.model.dto.ModulesRequest;
 import dev.diplom.school.module.model.dto.ModulesRequestList;
-import dev.diplom.school.step.model.dto.StepRequest;
+import dev.diplom.school.step.model.StepType;
+import dev.diplom.school.step.model.dto.StepDto;
 import dev.diplom.school.step.model.dto.StepSaveListDto;
-import dev.diplom.school.step_video.model.dto.StepVideoDto;
-import dev.diplom.school.step_video.model.dto.StepVideoSaveListDto;
+import dev.diplom.school.step.model.dto.step_content.StepContentText;
+import dev.diplom.school.step.model.dto.step_content.StepContentVideo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -99,29 +100,56 @@ public class FullCourseInitializer {
             stepService.saveAllStep(new StepSaveListDto(
                     i,
                     new ArrayList<>() {{
-                        add(new StepRequest(lessonId, "Step Name #" + 1, "Description #" + 1));
-                        add(new StepRequest(lessonId, "Step Name #" + 2, "Description #" + 2));
-                        add(new StepRequest(lessonId, "Step Name #" + 3, "Description #" + 3));
-                        add(new StepRequest(lessonId, "Step Name #" + 4, "Description #" + 4));
-                        add(new StepRequest(lessonId, "Step Name #" + 5, "Description #" + 5));
+                        add(new StepDto(
+                                lessonId,
+                                "Step name #" + 1,
+                                "description #" + 1,
+                                StepType.TEXT,
+                                1,
+                                new StepContentText(
+                                        null,
+                                        null,
+                                        "TEXT_TEXT_TEXT #1"
+                                )
+                        ));
+                        add(new StepDto(
+                                lessonId,
+                                "Step name #" + 2,
+                                "description #" + 2,
+                                StepType.TEXT,
+                                2,
+                                new StepContentText(
+                                        null,
+                                        null,
+                                        "TEXT_TEXT_TEXT #2"
+                                )
+                        ));
+                        add(new StepDto(
+                                lessonId,
+                                "Step name #" + 3,
+                                "description #" + 3,
+                                StepType.TEXT,
+                                3,
+                                new StepContentText(
+                                        null,
+                                        null,
+                                        "TEXT_TEXT_TEXT #3"
+                                )
+                        ));
+                        add(new StepDto(
+                                lessonId,
+                                "Step name #" + 4,
+                                "description #" + 4,
+                                StepType.VIDEO,
+                                4,
+                                new StepContentVideo(
+                                        null,
+                                        null,
+                                        "https://www.youtube.com/watch?v=LXb3EKWsInQ&pp=ygUKdGVzdCB2aWRlbw%3D%3D"
+                                )
+                        ));
                     }}
             ));
         }
     }
-
-    @Bean
-    @DependsOn("initStep")
-    public void initStepVideo() {
-        for (Long i = 1L; i <= 5L; i++) {
-            Long stepId = i;
-            stepVideoService.saveAllStepVideos(new StepVideoSaveListDto(
-                    stepId,
-                    new ArrayList<>() {{
-                        add(new StepVideoDto(0L, stepId, "Video Name #" + 1, "https://www.youtube.com/watch?v=LXb3EKWsInQ&pp=ygULdGVzdCB2aWRlbyA%3D", 1));
-                        add(new StepVideoDto(0L, stepId, "Video Name #" + 2, "https://www.youtube.com/watch?v=LXb3EKWsInQ&pp=ygULdGVzdCB2aWRlbyA%3D", 2));
-                    }}
-            ));
-        }
-    }
-
 }

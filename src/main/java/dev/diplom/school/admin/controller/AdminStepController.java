@@ -2,15 +2,15 @@ package dev.diplom.school.admin.controller;
 
 import dev.diplom.school.admin.service.AdminStepService;
 import dev.diplom.school.step.model.dto.StepDeleteListDto;
-import dev.diplom.school.step.model.dto.StepRequest;
+import dev.diplom.school.step.model.dto.StepDto;
 import dev.diplom.school.step.model.dto.StepResponse;
-import dev.diplom.school.step.model.dto.StepSaveListDto;
+import dev.diplom.school.step.model.dto.step_content.StepContentTextDto;
+import dev.diplom.school.step.model.dto.step_content.StepContentVideoDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,24 +23,51 @@ public class AdminStepController {
         this.adminStepService = adminStepService;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> saveStep(@RequestBody StepRequest stepRequest,
+    @PostMapping("/save-text")
+    public ResponseEntity<?> saveStepText(@RequestBody StepContentTextDto stepContentDto,
                                       UriComponentsBuilder uriComponentsBuilder) {
-        StepResponse stepResponse = adminStepService.saveStep(stepRequest);
+        StepDto stepDto = new StepDto(
+                stepContentDto.lessonId(),
+                stepContentDto.name(),
+                stepContentDto.description(),
+                stepContentDto.stepType(),
+                stepContentDto.position(),
+                stepContentDto.content()
+        );
+        StepResponse stepResponse = adminStepService.saveStep(stepDto);
         return ResponseEntity
                 .created(uriComponentsBuilder
-                        .replacePath("/api/v1/admin/step/{stepId}")
+                        .replacePath("/api/v1/admin/step/save-text/{stepId}")
                         .build(Map.of("stepId", stepResponse.id())))
                 .body(stepResponse);
     }
 
-    @PostMapping("/save-all")
-    public ResponseEntity<?> saveAllStep(@RequestBody StepSaveListDto stepRequestList) {
-        List<StepResponse> stepResponses = adminStepService.saveAllStep(stepRequestList);
+    @PostMapping("/save-video")
+    public ResponseEntity<?> saveStepVideo(@RequestBody StepContentVideoDto stepContentDto,
+                                           UriComponentsBuilder uriComponentsBuilder) {
+        StepDto stepDto = new StepDto(
+                stepContentDto.lessonId(),
+                stepContentDto.name(),
+                stepContentDto.description(),
+                stepContentDto.stepType(),
+                stepContentDto.position(),
+                stepContentDto.content()
+        );
+        StepResponse stepResponse = adminStepService.saveStep(stepDto);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(stepResponses);
+                .created(uriComponentsBuilder
+                        .replacePath("/api/v1/admin/step/save-video/{stepId}")
+                        .build(Map.of("stepId", stepResponse.id())))
+                .body(stepResponse);
     }
+
+//    @PostMapping("/save-all")
+//    public ResponseEntity<?> saveAllStep(@RequestBody StepSaveListDto stepRequestList) {
+//        List<StepResponse> stepResponses = adminStepService.saveAllStep(stepRequestList);
+//        return ResponseEntity
+//                .status(HttpStatus.CREATED)
+//                .body(stepResponses);
+//    }
 
     @DeleteMapping("/")
     public ResponseEntity<?> deleteStep(@RequestParam Long stepId, @RequestParam Long lessonId) {

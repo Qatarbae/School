@@ -15,8 +15,8 @@ public class StepController {
         this.stepService = stepService;
     }
 
-    @PostMapping("/find-by-id")
-    public ResponseEntity<?> getStep(Long stepId) {
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> getStep(@RequestParam Long stepId) {
 
         return ResponseEntity.ok().body(stepService.findById(stepId));
     }

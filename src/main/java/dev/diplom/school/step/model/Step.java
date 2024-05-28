@@ -11,9 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -37,15 +34,19 @@ public class Step {
     @Column(name = "description")
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "step_id")
-    private List<StepText> stepTexts = new ArrayList<>();
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private StepType stepType;
 
-    @OneToMany
-    @JoinColumn(name = "step_id")
-    private List<StepVideo> stepVideos = new ArrayList<>();
+    @Column(name = "position")
+    private Integer position;
 
-    @OneToMany
-    @JoinColumn(name = "step_id")
-    private List<StepTest> stepTest = new ArrayList<>();
+    @OneToOne(mappedBy = "step", cascade = CascadeType.ALL)
+    private StepText stepText;
+
+    @OneToOne(mappedBy = "step", cascade = CascadeType.ALL)
+    private StepVideo stepVideo;
+
+    @OneToOne(mappedBy = "step", cascade = CascadeType.ALL)
+    private StepTest stepTest;
 }

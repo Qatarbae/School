@@ -8,6 +8,6 @@ public record StepSaveListDto(
         @NotBlank
         Long lessonId,
         @NotBlank
-        List<StepRequest> stepRequestList
+        List<StepDto> stepDtoList
 ) {
 }

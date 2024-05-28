@@ -1,13 +1,16 @@
 package dev.diplom.school.step.service;
 
 
-import dev.diplom.school.step.mapper.StepMapper;
+import dev.diplom.school.step.model.Content;
 import dev.diplom.school.step.model.Step;
 import dev.diplom.school.step.model.dto.StepResponse;
 import dev.diplom.school.step.repository.StepRepository;
+import dev.diplom.school.step_text.mapper.StepTextMapper;
+import dev.diplom.school.step_video.mapper.StepVideoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StepService {
@@ -21,16 +24,43 @@ public class StepService {
 
     public StepResponse findById(Long stepId) {
         Step step = stepRepository.findById(stepId).orElseThrow();
-        return StepMapper.INSTANCE.mapToStepResponse(step);
+        return mapToStepResponseWithContent(step);
     }
 
     public StepResponse findByName(String name) {
-        Step modules = stepRepository.findByName(name).orElseThrow();
-        return StepMapper.INSTANCE.mapToStepResponse(modules);
+        Step step = stepRepository.findByName(name).orElseThrow();
+        return mapToStepResponseWithContent(step);
     }
 
     public List<StepResponse> findAllStepByLessonId(Long lessonId) {
         List<Step> stepList = stepRepository.findAllByLesson_Id(lessonId);
-        return StepMapper.INSTANCE.mapToStepResponseList(stepList);
+        return stepList.stream()
+                .map(this::mapToStepResponseWithContent)
+                .collect(Collectors.toList());
+    }
+
+    private StepResponse mapToStepResponseWithContent(Step step) {
+        Content content = getContentForStep(step);
+        return new StepResponse(
+                step.getId(),
+                step.getLesson().getId(),
+                step.getName(),
+                step.getDescription(),
+                step.getStepType(),
+                step.getPosition(),
+                content
+        );
+    }
+
+    private Content getContentForStep(Step step) {
+        switch (step.getStepType()) {
+            case TEXT:
+                return StepTextMapper.INSTANCE.toResponse(step.getStepText());
+            case VIDEO:
+                return StepVideoMapper.INSTANCE.toResponse(step.getStepVideo());
+            case TEST:
+            default:
+                throw new IllegalArgumentException("Unknown step type: " + step.getStepType());
+        }
     }
 }
