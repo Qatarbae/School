@@ -36,6 +36,12 @@ public class UserInitializer {
                     "123",
                     Role.ADMIN
             ));
+            authenticationService.register(new RegisterRequest(
+                    "fullName",
+                    "admin2",
+                    "123",
+                    Role.ADMIN
+            ));
         }
     }
 
