@@ -51,7 +51,8 @@ public class FullCourseInitializer {
         for (int i = 1; i <= 3; i++) {
             courseService.createCourse(new CourseRequest(
                     "course #" + i,
-                    "description #" + i
+                    "description #" + i,
+                    "null"
             ));
         }
     }

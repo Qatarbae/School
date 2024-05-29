@@ -29,6 +29,9 @@ public class Course {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "image")
+    private String image;
+
     @OneToMany
     @JoinColumn(name = "course_id")
     private List<Modules> modules = new ArrayList<>();

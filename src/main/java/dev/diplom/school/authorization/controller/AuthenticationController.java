@@ -3,6 +3,7 @@ package dev.diplom.school.authorization.controller;
 import dev.diplom.school.authorization.dto.AuthenticationRequest;
 import dev.diplom.school.authorization.dto.AuthenticationResponse;
 import dev.diplom.school.authorization.service.AuthenticationService;
+import dev.diplom.school.config.RateLimited;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
+    @RateLimited(value = "myMethod", limit = 1, duration = 1)
     @PostMapping("/refresh-token")
     public ResponseEntity<AuthenticationResponse> refreshToken(
             HttpServletRequest request,
