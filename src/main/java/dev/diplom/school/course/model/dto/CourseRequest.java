@@ -8,7 +8,7 @@ public record CourseRequest(
         @NotBlank
         String description,
         @NotBlank
-        String imageBase64
+        String image
 ) {
 
 }

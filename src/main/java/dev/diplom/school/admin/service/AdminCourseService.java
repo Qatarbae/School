@@ -22,14 +22,14 @@ public class AdminCourseService {
                 .id(null)
                 .name(courseRequest.name())
                 .description(courseRequest.description())
-                .imageBase64(courseRequest.imageBase64())
+                .image(courseRequest.image())
                 .modules(null)
                 .build());
         return new CourseResponse(
                 course.getId(),
                 course.getName(),
                 course.getDescription(),
-                course.getImageBase64()
+                course.getImage()
         );
 
     }

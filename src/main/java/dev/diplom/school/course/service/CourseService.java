@@ -28,7 +28,7 @@ public class CourseService {
                     course.getId(),
                     course.getName(),
                     course.getDescription(),
-                    course.getImageBase64()
+                    course.getImage()
             ));
         }
         return courseResponses;
@@ -41,7 +41,7 @@ public class CourseService {
                 course.getId(),
                 course.getName(),
                 course.getDescription(),
-                course.getImageBase64()
+                course.getImage()
         );
     }
 
@@ -52,7 +52,7 @@ public class CourseService {
                 course.getId(),
                 course.getName(),
                 course.getDescription(),
-                course.getImageBase64()
+                course.getImage()
         );
     }
 
@@ -65,7 +65,7 @@ public class CourseService {
                     course.getId(),
                     course.getName(),
                     course.getDescription(),
-                    course.getImageBase64()
+                    course.getImage()
             ));
         }
         return courseResponses;

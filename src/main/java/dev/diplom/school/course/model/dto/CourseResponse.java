@@ -4,6 +4,6 @@ public record CourseResponse(
         Long id,
         String name,
         String description,
-        String imageBase64
+        String image
 ) {
 }

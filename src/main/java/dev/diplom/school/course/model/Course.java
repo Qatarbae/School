@@ -30,7 +30,7 @@ public class Course {
     private String description;
 
     @Column(name = "image", columnDefinition = "TEXT")
-    private String imageBase64;
+    private String image;
 
     @OneToMany
     @JoinColumn(name = "course_id")
