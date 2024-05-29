@@ -29,8 +29,8 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "image", columnDefinition = "TEXT")
+    private String imageBase64;
 
     @OneToMany
     @JoinColumn(name = "course_id")

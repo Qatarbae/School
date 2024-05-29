@@ -1,6 +1,5 @@
 package dev.diplom.school.admin.service;
 
-import dev.diplom.school.course.mapper.CourseMapper;
 import dev.diplom.school.course.model.Course;
 import dev.diplom.school.course.model.dto.CourseRequest;
 import dev.diplom.school.course.model.dto.CourseResponse;
@@ -19,8 +18,20 @@ public class AdminCourseService {
 
     @Transactional
     public CourseResponse createCourse(CourseRequest courseRequest) {
-        Course course = courseRepository.save(CourseMapper.INSTANCE.mapToCourse(courseRequest));
-        return CourseMapper.INSTANCE.mapToCourseResponse(course);
+        Course course = courseRepository.save(Course.builder()
+                .id(null)
+                .name(courseRequest.name())
+                .description(courseRequest.description())
+                .imageBase64(courseRequest.imageBase64())
+                .modules(null)
+                .build());
+        return new CourseResponse(
+                course.getId(),
+                course.getName(),
+                course.getDescription(),
+                course.getImageBase64()
+        );
+
     }
 
     @Transactional

@@ -18,10 +18,14 @@ import dev.diplom.school.step.model.dto.step_content.StepContentVideo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 @Component
+
 public class FullCourseInitializer {
 
     private final AdminCourseService courseService;
@@ -31,29 +35,38 @@ public class FullCourseInitializer {
     private final AdminLessonService lessonService;
 
     private final AdminStepService stepService;
-
+    private final RestTemplate restTemplate;
     private final AdminStepVideoService stepVideoService;
 
-    public FullCourseInitializer(AdminCourseService courseService,
-                                 AdminModulesService modulesService,
-                                 AdminLessonService lessonService,
-                                 AdminStepService stepService,
-                                 AdminStepVideoService stepVideoService) {
+    public FullCourseInitializer(AdminCourseService courseService, AdminModulesService modulesService, AdminLessonService lessonService, AdminStepService stepService, RestTemplate restTemplate, AdminStepVideoService stepVideoService) {
         this.courseService = courseService;
         this.modulesService = modulesService;
         this.lessonService = lessonService;
         this.stepService = stepService;
+        this.restTemplate = restTemplate;
         this.stepVideoService = stepVideoService;
+    }
+
+    public String downloadImageAsMultipartFile(String imageUrl) throws IOException {
+        // Скачиваем изображение по URL и сохраняем его в массив байтов
+        byte[] imageBytes = restTemplate.getForObject(imageUrl, byte[].class);
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
 
     @Bean
     public void initCourse() {
         for (int i = 1; i <= 3; i++) {
-            courseService.createCourse(new CourseRequest(
-                    "course #" + i,
-                    "description #" + i,
-                    "null"
-            ));
+
+            try {
+                courseService.createCourse(new CourseRequest(
+                        "course #" + i,
+                        "description #" + i,
+                        downloadImageAsMultipartFile("https://argento-nails.ru/wp-content/uploads/2021/01/20.01.2021narashhivanie-resnits.jpeg")
+                ));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
