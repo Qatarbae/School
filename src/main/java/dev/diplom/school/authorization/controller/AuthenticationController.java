@@ -2,13 +2,11 @@ package dev.diplom.school.authorization.controller;
 
 import dev.diplom.school.authorization.dto.AuthenticationRequest;
 import dev.diplom.school.authorization.dto.AuthenticationResponse;
-import dev.diplom.school.authorization.dto.RegisterRequest;
 import dev.diplom.school.authorization.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +29,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh-token")
-    public void refreshToken(
+    public ResponseEntity<AuthenticationResponse> refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        service.refreshToken(request, response);
+        int i = 0;
+        return ResponseEntity.ok(service.refreshToken(request, response));
     }
-
-
 }

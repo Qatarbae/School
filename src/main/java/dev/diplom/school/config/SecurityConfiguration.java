@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
 
-                        .requestMatchers("api/v1/auth/authenticate").permitAll()
+                        .requestMatchers("api/v1/auth/**").permitAll()
 
                         .requestMatchers("api/v1/course/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers("api/v1/modules/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
