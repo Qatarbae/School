@@ -47,10 +47,29 @@ public class FullCourseInitializer {
         this.stepVideoService = stepVideoService;
     }
 
-    public String downloadImageAsMultipartFile(String imageUrl) throws IOException {
+    public String downloadImageAsBase64(String imageUrl) throws IOException {
         // Скачиваем изображение по URL и сохраняем его в массив байтов
         byte[] imageBytes = restTemplate.getForObject(imageUrl, byte[].class);
-        return Base64.getEncoder().encodeToString(imageBytes);
+
+        // Определяем тип изображения (например, image/jpeg)
+        String mimeType = determineMimeType(imageUrl);
+
+        // Кодируем изображение в Base64 и добавляем префикс
+        return "data:" + mimeType + ";base64," + Base64.getEncoder().encodeToString(imageBytes);
+    }
+
+    private String determineMimeType(String imageUrl) {
+        // Примерный способ определения MIME типа на основе расширения файла в URL
+        if (imageUrl.endsWith(".jpg") || imageUrl.endsWith(".jpeg")) {
+            return "image/jpeg";
+        } else if (imageUrl.endsWith(".png")) {
+            return "image/png";
+        } else if (imageUrl.endsWith(".gif")) {
+            return "image/gif";
+        } else {
+            // Добавьте дополнительные проверки, если нужно
+            return "application/octet-stream";
+        }
     }
 
     @Bean
@@ -61,7 +80,7 @@ public class FullCourseInitializer {
                 courseService.createCourse(new CourseRequest(
                         "course #" + i,
                         "description #" + i,
-                        downloadImageAsMultipartFile("https://argento-nails.ru/wp-content/uploads/2021/01/20.01.2021narashhivanie-resnits.jpeg")
+                        downloadImageAsBase64("https://argento-nails.ru/wp-content/uploads/2021/01/20.01.2021narashhivanie-resnits.jpeg")
                 ));
             } catch (IOException e) {
                 throw new RuntimeException(e);
