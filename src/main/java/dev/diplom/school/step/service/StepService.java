@@ -4,12 +4,18 @@ package dev.diplom.school.step.service;
 import dev.diplom.school.step.model.Content;
 import dev.diplom.school.step.model.Step;
 import dev.diplom.school.step.model.dto.StepResponse;
+import dev.diplom.school.step.model.dto.step_content.StepContentTest;
+import dev.diplom.school.step.model.dto.step_content.StepOptionDto;
+import dev.diplom.school.step.model.dto.step_content.StepQuestionDto;
 import dev.diplom.school.step.repository.StepRepository;
+import dev.diplom.school.step_test.mapper.StepOptionMapper;
+import dev.diplom.school.step_test.model.StepTest;
 import dev.diplom.school.step_text.mapper.StepTextMapper;
 import dev.diplom.school.step_video.mapper.StepVideoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +65,16 @@ public class StepService {
             case VIDEO:
                 return StepVideoMapper.INSTANCE.toResponse(step.getStepVideo());
             case TEST:
+                StepTest stepTest = step.getStepTest();
+                Set<StepQuestionDto> questionDtos = stepTest.getQuestions().stream()
+                        .map(question -> {
+                            Set<StepOptionDto> optionDtos = question.getOptions().stream()
+                                    .map(option -> StepOptionMapper.INSTANCE.toDto(option))
+                                    .collect(Collectors.toSet());
+                            return new StepQuestionDto(question.getId(), stepTest.getId(), question.getQuestion(), optionDtos);
+                        })
+                        .collect(Collectors.toSet());
+                return new StepContentTest(stepTest.getId(), step.getId(), stepTest.getName(), questionDtos);
             default:
                 throw new IllegalArgumentException("Unknown step type: " + step.getStepType());
         }

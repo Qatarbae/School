@@ -1,7 +1,5 @@
 package dev.diplom.school.step_test.model;
 
-import dev.diplom.school.step.model.Step;
-import dev.diplom.school.step.model.StepContentType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,22 +10,23 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "step_test")
+@Table(name = "step_question")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class StepTest implements StepContentType {
+public class StepQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "step_id")
-    private Step step;
+    @ManyToOne
+    @JoinColumn(name = "step_test_id", nullable = false)
+    private StepTest stepTest;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "question")
+    private String question;
 
-    @OneToMany(mappedBy = "stepTest")
-    private Set<StepQuestion> questions;
+    @OneToMany(mappedBy = "stepQuestion")
+    private Set<StepOption> options;
+
 }

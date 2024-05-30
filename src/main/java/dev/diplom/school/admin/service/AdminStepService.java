@@ -8,9 +8,16 @@ import dev.diplom.school.step.model.Step;
 import dev.diplom.school.step.model.StepContentType;
 import dev.diplom.school.step.model.StepType;
 import dev.diplom.school.step.model.dto.*;
-import dev.diplom.school.step.model.dto.step_content.StepContentText;
-import dev.diplom.school.step.model.dto.step_content.StepContentVideo;
+import dev.diplom.school.step.model.dto.step_content.*;
 import dev.diplom.school.step.repository.StepRepository;
+import dev.diplom.school.step_test.mapper.StepOptionMapper;
+import dev.diplom.school.step_test.mapper.StepQuestionMapper;
+import dev.diplom.school.step_test.mapper.StepTestMapper;
+import dev.diplom.school.step_test.model.StepOption;
+import dev.diplom.school.step_test.model.StepQuestion;
+import dev.diplom.school.step_test.model.StepTest;
+import dev.diplom.school.step_test.repository.StepOptionRepository;
+import dev.diplom.school.step_test.repository.StepQuestionRepository;
 import dev.diplom.school.step_test.repository.StepTestRepository;
 import dev.diplom.school.step_text.mapper.StepTextMapper;
 import dev.diplom.school.step_text.model.StepText;
@@ -22,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +46,8 @@ public class AdminStepService {
     private final StepTextRepository stepTextRepository;
 
     private final StepTestRepository stepTestRepository;
+    private final StepQuestionRepository stepQuestionRepository;
+    private final StepOptionRepository stepOptionRepository;
     @Transactional
     public void deleteAllStep(StepDeleteListDto stepDeleteListDto) {
         List<Long> idList = stepDeleteListDto.stepDeleteDtoList()
@@ -58,6 +68,7 @@ public class AdminStepService {
         switch (stepRequest.stepType()) {
             case TEXT -> savedStep.setStepText((StepText) contentType);
             case VIDEO -> savedStep.setStepVideo((StepVideo) contentType);
+            case TEST -> savedStep.setStepTest((StepTest) contentType);
         }
         return mapToStepResponseWithContent(savedStep);
     }
@@ -77,6 +88,7 @@ public class AdminStepService {
                     switch (stepRequest.stepType()) {
                         case TEXT -> step.setStepText((StepText) contentType);
                         case VIDEO -> step.setStepVideo((StepVideo) contentType);
+                        case TEST -> step.setStepTest((StepTest) contentType);
                     }
                     return step;
                 })
@@ -94,22 +106,43 @@ public class AdminStepService {
 
     private StepContentType saveStepContent(StepType stepType, Content content, Step step) {
         StepContentType contentType = null;
-        switch (stepType) {
-            case TEXT:
-                StepText stepText = StepTextMapper.INSTANCE.toEntity((StepContentText) content);
-                stepText.setStep(step);
-                contentType = stepTextRepository.save(stepText);
-                break;
-            case VIDEO:
-                StepVideo stepVideo = StepVideoMapper.INSTANCE.toEntity((StepContentVideo) content);
-                stepVideo.setStep(step);
-                contentType = stepVideoRepository.save(stepVideo);
-                break;
-            case TEST:
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown step type");
+
+        if (content instanceof StepContentText) {
+            StepText stepText = StepTextMapper.INSTANCE.toEntity((StepContentText) content);
+            stepText.setStep(step);
+            contentType = stepTextRepository.save(stepText);
+        } else if (content instanceof StepContentVideo) {
+            StepVideo stepVideo = StepVideoMapper.INSTANCE.toEntity((StepContentVideo) content);
+            stepVideo.setStep(step);
+            contentType = stepVideoRepository.save(stepVideo);
+        } else if (content instanceof StepContentTest) {
+            StepContentTest stepContentTest = (StepContentTest) content;
+            StepTest stepTest = StepTestMapper.INSTANCE.toEntity(stepContentTest);
+            stepTest.setStep(step);
+            stepTest.setQuestions(new HashSet<>());
+            stepTest = stepTestRepository.save(stepTest);
+
+            for (StepQuestionDto questionDto : stepContentTest.questions()) {
+                StepQuestion stepQuestion = StepQuestionMapper.INSTANCE.toEntity(questionDto);
+                stepQuestion.setStepTest(stepTest);
+                stepQuestion.setOptions(new HashSet<>());
+                stepQuestion = stepQuestionRepository.save(stepQuestion);
+
+                for (StepOptionDto optionDto : questionDto.options()) {
+                    StepOption stepOption = StepOptionMapper.INSTANCE.toEntity(optionDto);
+                    stepOption.setStepQuestion(stepQuestion);
+                    stepOption = stepOptionRepository.save(stepOption);
+                    stepQuestion.getOptions().add(stepOption);
+                }
+                stepQuestion = stepQuestionRepository.save(stepQuestion);
+                stepTest.getQuestions().add(stepQuestion);
+            }
+            stepTest = stepTestRepository.save(stepTest);
+            contentType = stepTest;
+        } else {
+            throw new IllegalArgumentException("Unknown content type");
         }
+
         return contentType;
     }
 
@@ -130,7 +163,14 @@ public class AdminStepService {
         return switch (step.getStepType()) {
             case TEXT -> new StepContentText(step.getStepText().getId(), step.getId(), step.getStepText().getText());
             case VIDEO -> new StepContentVideo(step.getStepVideo().getId(), step.getId(), step.getStepVideo().getUrl());
-            case TEST -> null;
+            case TEST -> new StepContentTest(step.getStepTest().getId(), step.getId(),
+                    step.getStepTest().getName(),
+                    step.getStepTest().getQuestions().stream()
+                            .map(question -> new StepQuestionDto(question.getId(), step.getStepTest().getId(), question.getQuestion(),
+                                    question.getOptions().stream()
+                                            .map(option -> new StepOptionDto(option.getId(), question.getId(), option.getOption(), option.getValid()))
+                                            .collect(Collectors.toSet())))
+                            .collect(Collectors.toSet()));
         };
     }
 }

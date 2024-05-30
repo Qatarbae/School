@@ -13,8 +13,7 @@ import dev.diplom.school.module.model.dto.ModulesRequestList;
 import dev.diplom.school.step.model.StepType;
 import dev.diplom.school.step.model.dto.StepDto;
 import dev.diplom.school.step.model.dto.StepSaveListDto;
-import dev.diplom.school.step.model.dto.step_content.StepContentText;
-import dev.diplom.school.step.model.dto.step_content.StepContentVideo;
+import dev.diplom.school.step.model.dto.step_content.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -23,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashSet;
 
 @Component
 
@@ -131,7 +131,7 @@ public class FullCourseInitializer {
         for (Long i = 1L; i <= 5L; i++) {
             Long lessonId = i;
             stepService.saveAllStep(new StepSaveListDto(
-                    i,
+                    lessonId,
                     new ArrayList<>() {{
                         add(new StepDto(
                                 lessonId,
@@ -179,6 +179,68 @@ public class FullCourseInitializer {
                                         null,
                                         null,
                                         "https://www.youtube.com/watch?v=LXb3EKWsInQ&pp=ygUKdGVzdCB2aWRlbw%3D%3D"
+                                )
+                        ));
+                        add(new StepDto(
+                                lessonId,
+                                "Step name #" + 5,
+                                "description #" + 5,
+                                StepType.TEST,
+                                5,
+                                new StepContentTest(
+                                        null,
+                                        null,
+                                        "TEST_NAME #1",
+                                        new HashSet<>() {{
+                                            add(new StepQuestionDto(
+                                                    null, null,
+                                                    "Question #1",
+                                                    new HashSet<>() {{
+                                                        add(new StepOptionDto(null, null, "Option #1", true));
+                                                        add(new StepOptionDto(null, null, "Option #2", false));
+                                                    }}
+                                            ));
+                                            add(new StepQuestionDto(
+                                                    null, null,
+                                                    "Question #2",
+                                                    new HashSet<>() {{
+                                                        add(new StepOptionDto(null, null, "Option #1", false));
+                                                        add(new StepOptionDto(null, null, "Option #2", true));
+                                                    }}
+                                            ));
+                                        }}
+                                )
+                        ));
+                        add(new StepDto(
+                                lessonId,
+                                "Step name #" + 6,
+                                "description #" + 6,
+                                StepType.TEST,
+                                6,
+                                new StepContentTest(
+                                        null,
+                                        null,
+                                        "TEST_NAME #2",
+                                        new HashSet<>() {{
+                                            add(new StepQuestionDto(
+                                                    null, null,
+                                                    "Question #1",
+                                                    new HashSet<>() {{
+                                                        add(new StepOptionDto(null, null, "Option #1", true));
+                                                        add(new StepOptionDto(null, null, "Option #2", false));
+                                                        add(new StepOptionDto(null, null, "Option #3", false));
+                                                    }}
+                                            ));
+                                            add(new StepQuestionDto(
+                                                    null, null,
+                                                    "Question #2",
+                                                    new HashSet<>() {{
+                                                        add(new StepOptionDto(null, null, "Option #1", false));
+                                                        add(new StepOptionDto(null, null, "Option #2", true));
+                                                        add(new StepOptionDto(null, null, "Option #3", false));
+                                                    }}
+                                            ));
+                                        }}
                                 )
                         ));
                     }}

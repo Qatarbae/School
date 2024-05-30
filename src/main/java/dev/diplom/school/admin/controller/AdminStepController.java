@@ -4,6 +4,7 @@ import dev.diplom.school.admin.service.AdminStepService;
 import dev.diplom.school.step.model.dto.StepDeleteListDto;
 import dev.diplom.school.step.model.dto.StepDto;
 import dev.diplom.school.step.model.dto.StepResponse;
+import dev.diplom.school.step.model.dto.step_content.StepContentTestDto;
 import dev.diplom.school.step.model.dto.step_content.StepContentTextDto;
 import dev.diplom.school.step.model.dto.step_content.StepContentVideoDto;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,25 @@ public class AdminStepController {
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .replacePath("/api/v1/admin/step/save-video/{stepId}")
+                        .build(Map.of("stepId", stepResponse.id())))
+                .body(stepResponse);
+    }
+
+    @PostMapping("/save-test")
+    public ResponseEntity<?> saveStepTest(@RequestBody StepContentTestDto stepContentDto,
+                                          UriComponentsBuilder uriComponentsBuilder) {
+        StepDto stepDto = new StepDto(
+                stepContentDto.lessonId(),
+                stepContentDto.name(),
+                stepContentDto.description(),
+                stepContentDto.stepType(),
+                stepContentDto.position(),
+                stepContentDto.content()
+        );
+        StepResponse stepResponse = adminStepService.saveStep(stepDto);
+        return ResponseEntity
+                .created(uriComponentsBuilder
+                        .replacePath("/api/v1/admin/step/save-test/{stepId}")
                         .build(Map.of("stepId", stepResponse.id())))
                 .body(stepResponse);
     }
