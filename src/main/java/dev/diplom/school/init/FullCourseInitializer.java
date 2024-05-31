@@ -4,7 +4,6 @@ import dev.diplom.school.admin.service.AdminCourseService;
 import dev.diplom.school.admin.service.AdminLessonService;
 import dev.diplom.school.admin.service.AdminModulesService;
 import dev.diplom.school.admin.service.AdminStepService;
-import dev.diplom.school.admin.service.step.AdminStepVideoService;
 import dev.diplom.school.course.model.dto.CourseRequest;
 import dev.diplom.school.lesson.model.dto.LessonRequest;
 import dev.diplom.school.lesson.model.dto.LessonSaveListDto;
@@ -36,15 +35,15 @@ public class FullCourseInitializer {
 
     private final AdminStepService stepService;
     private final RestTemplate restTemplate;
-    private final AdminStepVideoService stepVideoService;
 
-    public FullCourseInitializer(AdminCourseService courseService, AdminModulesService modulesService, AdminLessonService lessonService, AdminStepService stepService, RestTemplate restTemplate, AdminStepVideoService stepVideoService) {
+
+    public FullCourseInitializer(AdminCourseService courseService, AdminModulesService modulesService, AdminLessonService lessonService, AdminStepService stepService, RestTemplate restTemplate) {
         this.courseService = courseService;
         this.modulesService = modulesService;
         this.lessonService = lessonService;
         this.stepService = stepService;
         this.restTemplate = restTemplate;
-        this.stepVideoService = stepVideoService;
+
     }
 
     public String downloadImageAsBase64(String imageUrl) throws IOException {
