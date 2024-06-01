@@ -14,5 +14,7 @@ public interface StepOptionMapper {
     StepOption toEntity(StepOptionDto dto);
 
     @Mapping(target = "stepQuestionId", source = "stepQuestion.id")
+    @Mapping(target = "valid", ignore = true)
+        // Игнорируем поле valid
     StepOptionDto toDto(StepOption entity);
 }

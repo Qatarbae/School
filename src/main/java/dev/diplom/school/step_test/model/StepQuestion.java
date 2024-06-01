@@ -15,15 +15,16 @@ import java.util.Set;
 public class StepQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     @Column(name = "id")
+    @EqualsAndHashCode.Include
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "step_test_id", nullable = false)
     private StepTest stepTest;
 
-    @Column(name = "question")
+    @Column(name = "question", nullable = false)
+
     private String question;
 
     @Column(name = "one_correct")

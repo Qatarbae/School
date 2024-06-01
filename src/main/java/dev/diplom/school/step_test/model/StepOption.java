@@ -25,5 +25,5 @@ public class StepOption {
     private String option;
 
     @Column(name = "valid", nullable = false)
-    private Boolean valid;
+    private boolean valid;
 }

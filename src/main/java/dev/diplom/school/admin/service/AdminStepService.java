@@ -181,7 +181,7 @@ public class AdminStepService {
                     step.getStepTest().getQuestions().stream()
                             .map(question -> new StepQuestionDto(question.getId(), step.getStepTest().getId(), question.getQuestion(), question.isOneCorrect(),
                                     question.getOptions().stream()
-                                            .map(option -> new StepOptionDto(option.getId(), question.getId(), option.getOption(), option.getValid()))
+                                            .map(option -> new StepOptionDto(option.getId(), question.getId(), option.getOption(), null))
                                             .collect(Collectors.toSet())))
                             .collect(Collectors.toSet()));
         };
