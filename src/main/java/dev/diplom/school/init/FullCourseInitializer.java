@@ -77,8 +77,8 @@ public class FullCourseInitializer {
 
             try {
                 courseService.createCourse(new CourseRequest(
-                        "course #" + i,
-                        "description #" + i,
+                        "БАЗОВЫЙ КУРС VIP #" + i,
+                        "Самый наполненный курс для уверенного старта в профессии! #" + i,
                         downloadImageAsBase64("https://argento-nails.ru/wp-content/uploads/2021/01/20.01.2021narashhivanie-resnits.jpeg")
                 ));
             } catch (IOException e) {
@@ -96,11 +96,11 @@ public class FullCourseInitializer {
             modulesService.saveAllModules(new ModulesRequestList(
                     i,
                     new ArrayList<>() {{
-                        add(new ModulesRequest(courseId, "Modules Name #" + 1, "Description #" + 1));
-                        add(new ModulesRequest(courseId, "Modules Name #" + 2, "Description #" + 2));
-                        add(new ModulesRequest(courseId, "Modules Name #" + 3, "Description #" + 3));
-                        add(new ModulesRequest(courseId, "Modules Name #" + 4, "Description #" + 4));
-                        add(new ModulesRequest(courseId, "Modules Name #" + 5, "Description #" + 5));
+                        add(new ModulesRequest(courseId, "Вводная информация #" + 1, "Знакомство с курсом #" + 1));
+                        add(new ModulesRequest(courseId, "Оформление бровей #" + 2, "Первая теория по бровям! #" + 2));
+                        add(new ModulesRequest(courseId, "Оформление бровей #" + 3, "Вторая практика по бровям! #" + 3));
+                        add(new ModulesRequest(courseId, "Оформление бровей #" + 4, "Третья практика по бровям! #" + 4));
+                        add(new ModulesRequest(courseId, "Оформление бровей #" + 5, "Четвертая практика по бровям! #" + 5));
                     }}
             ));
         }
@@ -114,11 +114,11 @@ public class FullCourseInitializer {
             lessonService.saveAllLesson(new LessonSaveListDto(
                     i,
                     new ArrayList<>() {{
-                        add(new LessonRequest(modulesId, "Lesson Name #" + 1, "Description #" + 1, false));
-                        add(new LessonRequest(modulesId, "Lesson Name #" + 2, "Description #" + 2, false));
-                        add(new LessonRequest(modulesId, "Lesson Name #" + 3, "Description #" + 3, false));
-                        add(new LessonRequest(modulesId, "Lesson Name #" + 4, "Description #" + 4, true));
-                        add(new LessonRequest(modulesId, "Lesson Name #" + 5, "Description #" + 5, false));
+                        add(new LessonRequest(modulesId, "Коррекция #" + 1, "Описание Коррекция #" + 1, false));
+                        add(new LessonRequest(modulesId, "Коррекция #" + 2, "Описание Коррекция #" + 2, false));
+                        add(new LessonRequest(modulesId, "Окрашивание #" + 3, "Описание Окрашивание #" + 3, false));
+                        add(new LessonRequest(modulesId, "Окрашивание #" + 4, "Описание Окрашивание #" + 4, false));
+                        add(new LessonRequest(modulesId, "Экзамен #" + 5, "Описание Экзамен #" + 5, true));
                     }}
             ));
         }
@@ -134,44 +134,53 @@ public class FullCourseInitializer {
                     new ArrayList<>() {{
                         add(new StepDto(
                                 lessonId,
-                                "Step name #" + 1,
-                                "description #" + 1,
+                                "Материалы #" + 1,
+                                "Краткое описание #" + 1,
                                 StepType.TEXT,
                                 1,
                                 new StepContentText(
                                         null,
                                         null,
-                                        "TEXT_TEXT_TEXT #1"
+                                        "Коррекция бровей — это процедура создания правильной формы с учетом особенностей лица человека. Дома не получится сделать микроблейдинг, но можно ограничиться более простыми и менее болезненными методами обработки этой важной детали образа.\n" +
+                                                "Интерес к оформлению изгиба снова вырос, но ярко выраженные брови уже не в моде. Тренды на их отсутствие или монобровь некоторое время дразнили нас своей экстравагантностью. Но в 2022 году коррекция бровей сводится к натуральности и естественности. Важно учитывать, какие линии даны тебе от природы, тип лица, макияж, одежду и даже твое настроение. Лучше придерживаться техники, которая позволяет одновременно придать форму и добавить густоты и объёма, зализанные волоски подходят не всем.\n" +
+                                                "\n" +
+                                                "В домашних условиях доступна коррекция формы бровей тремя разными способами. Самый популярный вариант среде них — выщипывание. Но мы расскажем еще про два метода, которые могут тебе подойти. #1"
                                 )
                         ));
                         add(new StepDto(
                                 lessonId,
-                                "Step name #" + 2,
-                                "description #" + 2,
+                                "Материалы #" + 2,
+                                "Краткое описание #" + 2,
                                 StepType.TEXT,
                                 2,
                                 new StepContentText(
                                         null,
                                         null,
-                                        "TEXT_TEXT_TEXT #2"
+                                        "Коррекция бровей — это процедура создания правильной формы с учетом особенностей лица человека. Дома не получится сделать микроблейдинг, но можно ограничиться более простыми и менее болезненными методами обработки этой важной детали образа.\n" +
+                                                "Интерес к оформлению изгиба снова вырос, но ярко выраженные брови уже не в моде. Тренды на их отсутствие или монобровь некоторое время дразнили нас своей экстравагантностью. Но в 2022 году коррекция бровей сводится к натуральности и естественности. Важно учитывать, какие линии даны тебе от природы, тип лица, макияж, одежду и даже твое настроение. Лучше придерживаться техники, которая позволяет одновременно придать форму и добавить густоты и объёма, зализанные волоски подходят не всем.\n" +
+                                                "\n" +
+                                                "В домашних условиях доступна коррекция формы бровей тремя разными способами. Самый популярный вариант среде них — выщипывание. Но мы расскажем еще про два метода, которые могут тебе подойти. #2"
                                 )
                         ));
                         add(new StepDto(
                                 lessonId,
-                                "Step name #" + 3,
-                                "description #" + 3,
+                                "Методы коррекции #" + 3,
+                                "Краткое описание #" + 3,
                                 StepType.TEXT,
                                 3,
                                 new StepContentText(
                                         null,
                                         null,
-                                        "TEXT_TEXT_TEXT #3"
+                                        "Коррекция бровей — это процедура создания правильной формы с учетом особенностей лица человека. Дома не получится сделать микроблейдинг, но можно ограничиться более простыми и менее болезненными методами обработки этой важной детали образа.\n" +
+                                                "Интерес к оформлению изгиба снова вырос, но ярко выраженные брови уже не в моде. Тренды на их отсутствие или монобровь некоторое время дразнили нас своей экстравагантностью. Но в 2022 году коррекция бровей сводится к натуральности и естественности. Важно учитывать, какие линии даны тебе от природы, тип лица, макияж, одежду и даже твое настроение. Лучше придерживаться техники, которая позволяет одновременно придать форму и добавить густоты и объёма, зализанные волоски подходят не всем.\n" +
+                                                "\n" +
+                                                "В домашних условиях доступна коррекция формы бровей тремя разными способами. Самый популярный вариант среде них — выщипывание. Но мы расскажем еще про два метода, которые могут тебе подойти. #3"
                                 )
                         ));
                         add(new StepDto(
                                 lessonId,
-                                "Step name #" + 4,
-                                "description #" + 4,
+                                "Видео-урок #" + 4,
+                                "Краткое описание #" + 4,
                                 StepType.VIDEO,
                                 4,
                                 new StepContentVideo(
@@ -182,31 +191,34 @@ public class FullCourseInitializer {
                         ));
                         add(new StepDto(
                                 lessonId,
-                                "Step name #" + 5,
-                                "description #" + 5,
+                                "Красители #" + 5,
+                                "Краткое описание #" + 5,
                                 StepType.TEST,
                                 5,
                                 new StepContentTest(
                                         null,
                                         null,
-                                        "TEST_NAME #1",
+                                        "Красители #1",
                                         new HashSet<>() {{
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Question #1",
+                                                    "Сколько красителей мы разобрали на уроке?",
                                                     true,
                                                     new HashSet<>() {{
-                                                        add(new StepOptionDto(null, null, "Option #1", true));
-                                                        add(new StepOptionDto(null, null, "Option #2", false));
+                                                        add(new StepOptionDto(null, null, "3 красителя ", true));
+                                                        add(new StepOptionDto(null, null, "4 красителя", false));
+                                                        add(new StepOptionDto(null, null, "5 красителя", false));
+                                                        add(new StepOptionDto(null, null, "6 красителя", false));
                                                     }}
                                             ));
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Question #2",
+                                                    "Сколько красителей мы разобрали на уроке?",
                                                     true,
                                                     new HashSet<>() {{
-                                                        add(new StepOptionDto(null, null, "Option #1", false));
-                                                        add(new StepOptionDto(null, null, "Option #2", true));
+                                                        add(new StepOptionDto(null, null, "3 красителя ", false));
+                                                        add(new StepOptionDto(null, null, "4 красителя", true));
+                                                        add(new StepOptionDto(null, null, "5 красителя", false));
                                                     }}
                                             ));
                                         }}
@@ -214,33 +226,33 @@ public class FullCourseInitializer {
                         ));
                         add(new StepDto(
                                 lessonId,
-                                "Step name #" + 6,
-                                "description #" + 6,
+                                "Крема #" + 6,
+                                "Краткое описание #" + 6,
                                 StepType.TEST,
                                 6,
                                 new StepContentTest(
                                         null,
                                         null,
-                                        "TEST_NAME #2",
+                                        "Крема #2",
                                         new HashSet<>() {{
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Question #1",
+                                                    "Сколько кремов мы разобрали на уроке? ",
                                                     false,
                                                     new HashSet<>() {{
-                                                        add(new StepOptionDto(null, null, "Option #1", true));
-                                                        add(new StepOptionDto(null, null, "Option #2", true));
-                                                        add(new StepOptionDto(null, null, "Option #3", false));
+                                                        add(new StepOptionDto(null, null, "2", true));
+                                                        add(new StepOptionDto(null, null, "3", true));
+                                                        add(new StepOptionDto(null, null, "4", false));
                                                     }}
                                             ));
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Question #2",
+                                                    "Сколько кремов мы разобрали на уроке?",
                                                     false,
                                                     new HashSet<>() {{
-                                                        add(new StepOptionDto(null, null, "Option #1", false));
-                                                        add(new StepOptionDto(null, null, "Option #2", true));
-                                                        add(new StepOptionDto(null, null, "Option #3", false));
+                                                        add(new StepOptionDto(null, null, "2", false));
+                                                        add(new StepOptionDto(null, null, "3", true));
+                                                        add(new StepOptionDto(null, null, "4", false));
                                                     }}
                                             ));
                                         }}
