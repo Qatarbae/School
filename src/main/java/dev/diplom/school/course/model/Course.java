@@ -1,6 +1,7 @@
 package dev.diplom.school.course.model;
 
 import dev.diplom.school.module.model.Modules;
+import dev.diplom.school.user.model.entity.UserCourse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,4 +36,7 @@ public class Course {
     @OneToMany
     @JoinColumn(name = "course_id")
     private List<Modules> modules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course")
+    private List<UserCourse> userCourses;
 }

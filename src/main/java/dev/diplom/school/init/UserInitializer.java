@@ -5,7 +5,7 @@ import dev.diplom.school.authorization.dto.RegisterRequest;
 import dev.diplom.school.authorization.service.AuthenticationService;
 import dev.diplom.school.user.model.entity.Role;
 import dev.diplom.school.user.model.entity.User;
-import dev.diplom.school.user.service.UserService;
+import dev.diplom.school.user.service.UserServiceDeprecated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
@@ -17,10 +17,10 @@ import java.util.Optional;
 public class UserInitializer {
 
     private final AuthenticationService authenticationService;
-    private final UserService userService;
+    private final UserServiceDeprecated userService;
 
     @Autowired
-    public UserInitializer(UserService userService, AuthenticationService authenticationService) {
+    public UserInitializer(UserServiceDeprecated userService, AuthenticationService authenticationService) {
         this.userService = userService;
         this.authenticationService = authenticationService;
     }
