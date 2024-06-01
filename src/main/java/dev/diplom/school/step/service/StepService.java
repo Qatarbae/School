@@ -71,7 +71,7 @@ public class StepService {
                             Set<StepOptionDto> optionDtos = question.getOptions().stream()
                                     .map(option -> StepOptionMapper.INSTANCE.toDto(option))
                                     .collect(Collectors.toSet());
-                            return new StepQuestionDto(question.getId(), stepTest.getId(), question.getQuestion(), optionDtos);
+                            return new StepQuestionDto(question.getId(), stepTest.getId(), question.getQuestion(), question.isOneCorrect(), optionDtos);
                         })
                         .collect(Collectors.toSet());
                 return new StepContentTest(stepTest.getId(), step.getId(), stepTest.getName(), questionDtos);

@@ -194,6 +194,7 @@ public class FullCourseInitializer {
                                             add(new StepQuestionDto(
                                                     null, null,
                                                     "Question #1",
+                                                    true,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "Option #1", true));
                                                         add(new StepOptionDto(null, null, "Option #2", false));
@@ -202,6 +203,7 @@ public class FullCourseInitializer {
                                             add(new StepQuestionDto(
                                                     null, null,
                                                     "Question #2",
+                                                    true,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "Option #1", false));
                                                         add(new StepOptionDto(null, null, "Option #2", true));
@@ -224,15 +226,17 @@ public class FullCourseInitializer {
                                             add(new StepQuestionDto(
                                                     null, null,
                                                     "Question #1",
+                                                    false,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "Option #1", true));
-                                                        add(new StepOptionDto(null, null, "Option #2", false));
+                                                        add(new StepOptionDto(null, null, "Option #2", true));
                                                         add(new StepOptionDto(null, null, "Option #3", false));
                                                     }}
                                             ));
                                             add(new StepQuestionDto(
                                                     null, null,
                                                     "Question #2",
+                                                    false,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "Option #1", false));
                                                         add(new StepOptionDto(null, null, "Option #2", true));

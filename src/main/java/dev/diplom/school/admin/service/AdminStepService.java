@@ -126,6 +126,17 @@ public class AdminStepService {
                 StepQuestion stepQuestion = StepQuestionMapper.INSTANCE.toEntity(questionDto);
                 stepQuestion.setStepTest(stepTest);
                 stepQuestion.setOptions(new HashSet<>());
+
+                // Check for the number of correct answers if oneCorrect is true
+                if (stepQuestion.isOneCorrect()) {
+                    long correctOptionsCount = questionDto.options().stream()
+                            .filter(StepOptionDto::valid)
+                            .count();
+                    if (correctOptionsCount > 1) {
+                        throw new IllegalArgumentException("Question with one correct answer cannot have multiple correct options.");
+                    }
+                }
+
                 stepQuestion = stepQuestionRepository.save(stepQuestion);
 
                 for (StepOptionDto optionDto : questionDto.options()) {
@@ -134,9 +145,11 @@ public class AdminStepService {
                     stepOption = stepOptionRepository.save(stepOption);
                     stepQuestion.getOptions().add(stepOption);
                 }
+
                 stepQuestion = stepQuestionRepository.save(stepQuestion);
                 stepTest.getQuestions().add(stepQuestion);
             }
+
             stepTest = stepTestRepository.save(stepTest);
             contentType = stepTest;
         } else {
@@ -166,7 +179,7 @@ public class AdminStepService {
             case TEST -> new StepContentTest(step.getStepTest().getId(), step.getId(),
                     step.getStepTest().getName(),
                     step.getStepTest().getQuestions().stream()
-                            .map(question -> new StepQuestionDto(question.getId(), step.getStepTest().getId(), question.getQuestion(),
+                            .map(question -> new StepQuestionDto(question.getId(), step.getStepTest().getId(), question.getQuestion(), question.isOneCorrect(),
                                     question.getOptions().stream()
                                             .map(option -> new StepOptionDto(option.getId(), question.getId(), option.getOption(), option.getValid()))
                                             .collect(Collectors.toSet())))

@@ -26,6 +26,9 @@ public class StepQuestion {
     @Column(name = "question")
     private String question;
 
+    @Column(name = "one_correct")
+    private boolean oneCorrect;
+
     @OneToMany(mappedBy = "stepQuestion")
     private Set<StepOption> options;
 
