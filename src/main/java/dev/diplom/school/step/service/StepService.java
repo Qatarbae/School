@@ -45,6 +45,13 @@ public class StepService {
                 .collect(Collectors.toList());
     }
 
+    public List<StepResponse> findAllStepsByModuleId(Long moduleId) {
+        List<Step> stepList = stepRepository.findAllByModule_Id(moduleId);
+        return stepList.stream()
+                .map(this::mapToStepResponseWithContent)
+                .collect(Collectors.toList());
+    }
+
     private StepResponse mapToStepResponseWithContent(Step step) {
         Content content = getContentForStep(step);
         return new StepResponse(

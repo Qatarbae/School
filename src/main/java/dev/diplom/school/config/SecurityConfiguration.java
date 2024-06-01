@@ -40,6 +40,8 @@ public class SecurityConfiguration {
 
                         .requestMatchers("api/v1/auth/**").permitAll()
 
+                        .requestMatchers("api/v1/user-test-check").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("api/v1/user-test-check/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers("api/v1/course/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers("api/v1/modules/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers("api/v1/lesson/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())

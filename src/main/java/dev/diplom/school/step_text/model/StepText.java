@@ -28,7 +28,7 @@ public class StepText implements StepContentType {
 //    @Column(name = "name")
 //    private String name;
 
-    @Column(name = "text")
+    @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
 //    @Column(name = "position")

@@ -14,7 +14,6 @@ import dev.diplom.school.step_test.repository.StepTestRepository;
 import dev.diplom.school.user.model.entity.User;
 import dev.diplom.school.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -31,8 +30,8 @@ public class UserResultTestCheckServiceImpl implements UserResultTestCheckServic
 
 
     @Override
-    public UserResultTestDto saveUserResultTest(UserResultTestCheckDto userResultTestDto, UserDetails userDetails) {
-        User user = userRepository.findByLogin(userDetails.getUsername())
+    public UserResultTestDto saveUserResultTest(UserResultTestCheckDto userResultTestDto, String name) {
+        User user = userRepository.findByLogin(name)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Login"));
         StepTest stepTest = stepTestRepository.findById(userResultTestDto.getContent().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid step test ID"));

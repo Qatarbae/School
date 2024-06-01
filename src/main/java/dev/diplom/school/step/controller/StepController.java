@@ -27,9 +27,15 @@ public class StepController {
         return ResponseEntity.ok().body(stepService.findByName(name));
     }
 
-    @GetMapping("/find-all-step")
-    public ResponseEntity<?> getAllStep(@RequestParam Long lessonId) {
+    @GetMapping("/find-all-step-lesson")
+    public ResponseEntity<?> getAllStepByLessonId(@RequestParam Long lessonId) {
 
         return ResponseEntity.ok().body(stepService.findAllStepByLessonId(lessonId));
+    }
+
+    @GetMapping("/find-all-step-modules")
+    public ResponseEntity<?> getAllStepByModulesId(@RequestParam Long modulesId) {
+
+        return ResponseEntity.ok().body(stepService.findAllStepsByModuleId(modulesId));
     }
 }

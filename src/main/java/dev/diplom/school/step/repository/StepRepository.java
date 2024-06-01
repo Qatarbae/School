@@ -20,6 +20,10 @@ public interface StepRepository extends CrudRepository<Step, Long> {
     @Query("SELECT s FROM Step s WHERE s.lesson.id = :lessonId")
     List<Step> findAllByLesson_Id(Long lessonId);
 
+    @Transactional(readOnly = true)
+    @Query("SELECT s FROM Step s WHERE s.lesson.modules.id = :moduleId")
+    List<Step> findAllByModule_Id(Long moduleId);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Step s WHERE s.id IN :stepIdList AND s.lesson.id = :lessonId")

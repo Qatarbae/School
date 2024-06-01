@@ -109,7 +109,7 @@ public class FullCourseInitializer {
     @Bean
     @DependsOn("initModules")
     public void initLesson() {
-        for (Long i = 1L; i <= 5L; i++) {
+        for (Long i = 1L; i <= 15L; i++) {
             Long modulesId = i;
             lessonService.saveAllLesson(new LessonSaveListDto(
                     i,
@@ -127,7 +127,7 @@ public class FullCourseInitializer {
     @Bean
     @DependsOn("initLesson")
     public void initStep() {
-        for (Long i = 1L; i <= 5L; i++) {
+        for (Long i = 1L; i <= 75L; i++) {
             Long lessonId = i;
             stepService.saveAllStep(new StepSaveListDto(
                     lessonId,
