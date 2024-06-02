@@ -205,7 +205,7 @@ public class FullCourseInitializer {
                                                     "Сколько красителей мы разобрали на уроке? " + lessonId + 1,
                                                     true,
                                                     new HashSet<>() {{
-                                                        add(new StepOptionDto(null, null, "3 красителя ", true));
+                                                        add(new StepOptionDto(null, null, "3 красителя", true));
                                                         add(new StepOptionDto(null, null, "4 красителя", false));
                                                         add(new StepOptionDto(null, null, "5 красителя", false));
                                                         add(new StepOptionDto(null, null, "6 красителя", false));
@@ -216,7 +216,7 @@ public class FullCourseInitializer {
                                                     "Сколько красителей мы разобрали на уроке? " + lessonId + 2,
                                                     true,
                                                     new HashSet<>() {{
-                                                        add(new StepOptionDto(null, null, "3 красителя ", false));
+                                                        add(new StepOptionDto(null, null, "3 красителя", false));
                                                         add(new StepOptionDto(null, null, "4 красителя", true));
                                                         add(new StepOptionDto(null, null, "5 красителя", false));
                                                     }}
