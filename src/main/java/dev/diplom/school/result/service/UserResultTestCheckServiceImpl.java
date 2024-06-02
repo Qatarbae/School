@@ -91,7 +91,7 @@ public class UserResultTestCheckServiceImpl implements UserResultTestCheckServic
                 userResultTest.getId(),
                 userResultTest.getUser().getLogin(),
                 userResultTest.getStepTest().getStep().getLesson().getModules().getCourse().getName(),
-                userResultTest.getStepTest().getName(),
+                userResultTest.getStepTest().getStep().getName(),
                 questionPassed,
                 userResultTest.getResultType().name()
         );
