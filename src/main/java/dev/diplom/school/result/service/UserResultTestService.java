@@ -16,4 +16,8 @@ public interface UserResultTestService {
     List<UserResultTestDto> getAllByStepTestId(Long testId);
 
     List<UserResultTestDto> getAllByResultType(String resultType);
+
+    List<UserResultTestDto> findAllByUserName(String name);
+
+    List<UserResultTestDto> findAllByTestName(String name);
 }

@@ -20,25 +20,25 @@ public class AdminUserTestResultController {
         this.userResultTestService = userResultTestService;
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<UserResultTestDto> getByUserId(@RequestParam Long userId) {
-        UserResultTestDto userResultTestDto = userResultTestService.getByUserId(userId);
-        return ResponseEntity.ok(userResultTestDto);
-    }
+//    @GetMapping("/user")
+//    public ResponseEntity<UserResultTestDto> getByUserId(@RequestParam Long userId) {
+//        UserResultTestDto userResultTestDto = userResultTestService.getByUserId(userId);
+//        return ResponseEntity.ok(userResultTestDto);
+//    }
+//
+//    @GetMapping("/test")
+//    public ResponseEntity<UserResultTestDto> getByStepTestId(@RequestParam Long testId) {
+//        UserResultTestDto userResultTestDto = userResultTestService.getByStepTestId(testId);
+//        return ResponseEntity.ok(userResultTestDto);
+//    }
 
-    @GetMapping("/test")
-    public ResponseEntity<UserResultTestDto> getByStepTestId(@RequestParam Long testId) {
-        UserResultTestDto userResultTestDto = userResultTestService.getByStepTestId(testId);
-        return ResponseEntity.ok(userResultTestDto);
-    }
-
-    @GetMapping("/user/all")
+    @GetMapping("/user-all")
     public ResponseEntity<List<UserResultTestDto>> getAllByUserId(@RequestParam Long userId) {
         List<UserResultTestDto> userResultTestDtos = userResultTestService.getAllByUserId(userId);
         return ResponseEntity.ok(userResultTestDtos);
     }
 
-    @GetMapping("/test/all")
+    @GetMapping("/test-all")
     public ResponseEntity<List<UserResultTestDto>> getAllByStepTestId(@RequestParam Long testId) {
         List<UserResultTestDto> userResultTestDtos = userResultTestService.getAllByStepTestId(testId);
         return ResponseEntity.ok(userResultTestDtos);
@@ -48,5 +48,15 @@ public class AdminUserTestResultController {
     public ResponseEntity<List<UserResultTestDto>> getAllByResultType(@RequestParam String resultType) {
         List<UserResultTestDto> userResultTestDtos = userResultTestService.getAllByResultType(resultType);
         return ResponseEntity.ok(userResultTestDtos);
+    }
+
+    @GetMapping("/by-user-name")
+    public ResponseEntity<List<UserResultTestDto>> getResultsByUserName(@RequestParam String name) {
+        return ResponseEntity.ok(userResultTestService.findAllByUserName(name));
+    }
+
+    @GetMapping("/by-test-name")
+    public ResponseEntity<List<UserResultTestDto>> getResultsByTestName(@RequestParam String name) {
+        return ResponseEntity.ok(userResultTestService.findAllByTestName(name));
     }
 }

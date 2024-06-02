@@ -202,7 +202,7 @@ public class FullCourseInitializer {
                                         new HashSet<>() {{
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Сколько красителей мы разобрали на уроке?",
+                                                    "Сколько красителей мы разобрали на уроке? " + lessonId + 1,
                                                     true,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "3 красителя ", true));
@@ -213,7 +213,7 @@ public class FullCourseInitializer {
                                             ));
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Сколько красителей мы разобрали на уроке?",
+                                                    "Сколько красителей мы разобрали на уроке? " + lessonId + 2,
                                                     true,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "3 красителя ", false));
@@ -237,7 +237,7 @@ public class FullCourseInitializer {
                                         new HashSet<>() {{
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Сколько кремов мы разобрали на уроке? ",
+                                                    "Сколько кремов мы разобрали на уроке? " + lessonId + 1,
                                                     false,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "2", true));
@@ -247,7 +247,7 @@ public class FullCourseInitializer {
                                             ));
                                             add(new StepQuestionDto(
                                                     null, null,
-                                                    "Сколько кремов мы разобрали на уроке?",
+                                                    "Сколько кремов мы разобрали на уроке? " + lessonId + 2,
                                                     false,
                                                     new HashSet<>() {{
                                                         add(new StepOptionDto(null, null, "2", false));

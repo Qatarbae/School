@@ -75,4 +75,20 @@ public class UserResultTestImpl implements UserResultTestService {
                 userResultTest.getResultType().name()
         );
     }
+
+    @Override
+    public List<UserResultTestDto> findAllByUserName(String name) {
+        return userResultTestRepository.findAllByUserName(name)
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResultTestDto> findAllByTestName(String name) {
+        return userResultTestRepository.findAllByTestName(name)
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
 }

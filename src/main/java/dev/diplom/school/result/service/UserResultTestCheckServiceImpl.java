@@ -33,14 +33,14 @@ public class UserResultTestCheckServiceImpl implements UserResultTestCheckServic
     public UserResultTestDto saveUserResultTest(UserResultTestCheckDto userResultTestDto, String name) {
         User user = userRepository.findByLogin(name)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Login"));
-        StepTest stepTest = stepTestRepository.findById(userResultTestDto.getContent().getId())
+        StepTest stepTest = stepTestRepository.findById(userResultTestDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid step test ID"));
 
         int correctAnswersCount = 0;
-        int totalQuestions = userResultTestDto.getContent().getQuestions().size();
+        int totalQuestions = userResultTestDto.getQuestions().size();
 
-        for (UserResultTestCheckDto.StepContentTestCheckDto.QuestionCheckDto questionDto : userResultTestDto.getContent().getQuestions()) {
-            StepQuestion question = stepQuestionRepository.findByQuestion(questionDto.getQuestion())
+        for (UserResultTestCheckDto.QuestionCheckDto questionDto : userResultTestDto.getQuestions()) {
+            StepQuestion question = stepQuestionRepository.findByStepTestIdAndQuestion(userResultTestDto.getId(), questionDto.getQuestion())
                     .orElseThrow(() -> new IllegalArgumentException("Invalid question ID"));
 
             // Получаем правильные ответы из базы данных
